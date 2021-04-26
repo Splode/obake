@@ -1,0 +1,63 @@
+# Amazon
+[[app]]
+URL = "https://www.amazon.com/Chapin-International-20003-Purpose-Translucent/dp/B0038EE754"
+name = "Chapin Multi-Purpose Sprayer"
+price = 27.62
+disabled = true
+
+# App Store
+[[app]]
+URL = "https://apps.apple.com/us/app/things-3-for-ipad/id904244226"
+name = "Things 3 for iPad"
+price = 19.99
+
+[[app]]
+URL = "https://apps.apple.com/us/app/reeder-5/id1529448980"
+name = "Reeder 5"
+price = 9.99
+
+[[app]]
+URL = "https://apps.apple.com/us/app/goodlinks/id1474335294"
+name = "Goodlinks"
+price = 4.99
+
+[[app]]
+URL = "https://apps.apple.com/us/app/northgard/id1533979882"
+name = "Northgard"
+price = 7.99
+
+[[app]]
+URL = "https://apps.apple.com/us/app/xcom-2-collection/id1288508230"
+name = "XCOM 2 Collection"
+price = 24.99
+
+[[app]]
+URL = "https://apps.apple.com/us/app/steamworld-quest/id1483051049"
+name = "SteamWorld Quest"
+price = 9.99
+
+[[app]]
+URL = "https://apps.apple.com/us/app/finale-daily-habit-tracker/id1546661013"
+name = "Finale: Daily Habit Tracker"
+price = 1.99
+
+[[app]]
+URL = "https://apps.apple.com/us/app/henry-habits-wellbeing/id1530541067"
+name = "Henry - Habits & Wellbeing"
+price = 2.99
+
+[[app]]
+URL = "https://apps.apple.com/us/app/forest-stay-focused/id866450515"
+name = "Forest - Stay focused"
+price = 1.99
+
+# REI
+[[app]]
+URL = "https://www.rei.com/product/136058/rei-co-op-base-camp-6-tent"
+name = "REI Co-op Base Camp 6 Tent"
+price = 469.00
+
+[[app]]
+URL = "https://www.rei.com/product/127390/rei-co-op-kindercone-25-sleeping-bag-kids"
+name = "REI Co-op Kindercone 25 Sleeping Bag - Kids'"
+price = 69.95
