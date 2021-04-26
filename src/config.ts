@@ -3,7 +3,7 @@ import readFile from "./file";
 import Good from "./Good";
 
 export class Config implements Config {
-  public static async getConfig() {
+  public static async getConfig(): Promise<Config> {
     if (!Config.instance) {
       const cfg = await loadConfig();
       Config.instance = new Config(cfg);
