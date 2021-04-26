@@ -3,7 +3,6 @@
 URL = "https://www.amazon.com/Chapin-International-20003-Purpose-Translucent/dp/B0038EE754"
 name = "Chapin Multi-Purpose Sprayer"
 price = 27.62
-disabled = true
 
 # App Store
 [[app]]

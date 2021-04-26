@@ -1,25 +1,17 @@
-const fs = require("fs").promises;
 const toml = require("toml");
+const readFile = require("./file.js");
 
-async function readFile(filePath) {
-  try {
-    const data = await fs.readFile(filePath);
-    return data.toString();
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function getConfig(filePath) {
+async function getConfigFile(filePath) {
   return await readFile(filePath);
 }
 
-(async () => {
-  const file = await getConfig("config.toml");
+async function getConfig() {
+  const file = await getConfigFile("config.toml");
   try {
-    const data = toml.parse(file)
-    console.dir(data.app.length)
+    return toml.parse(file);
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
-})();
+}
+
+module.exports = { getConfig };
