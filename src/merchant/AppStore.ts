@@ -1,10 +1,11 @@
 import puppeteer from "puppeteer";
+import Notifier from "../message/Notifier";
 import IGood from "../config/IGood";
 import Merchant from "./Merchant";
 
 export default class AppStore extends Merchant {
-  public constructor(good: IGood) {
-    super(good);
+  public constructor(good: IGood, notifier: Notifier) {
+    super(good, notifier);
   }
 
   public async priceCheck(page: puppeteer.Page): Promise<void> {

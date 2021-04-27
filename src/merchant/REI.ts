@@ -1,10 +1,11 @@
 import IGood from "../config/IGood";
 import Merchant from "./Merchant";
 import puppeteer from "puppeteer";
+import Notifier from "../message/Notifier";
 
 export default class REI extends Merchant {
-  public constructor(good: IGood) {
-    super(good);
+  public constructor(good: IGood, notifier: Notifier) {
+    super(good, notifier);
   }
 
   public async priceCheck(page: puppeteer.Page): Promise<void> {

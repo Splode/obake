@@ -1,18 +1,18 @@
 import puppeteer from "puppeteer";
 import { parsePrice, prettyPercent } from "../strings";
 import IGood from "../config/IGood";
-import TelegramClient from "../Telegram";
 import Logger from "../Logger";
+import Notifier from "src/message/Notifier";
 
 export default abstract class Merchant {
-  public constructor(good: IGood) {
+  public constructor(good: IGood, notifier: Notifier) {
     this.good = good;
-    this.telegram = new TelegramClient();
+    this.notifier = notifier;
     this.log = new Logger();
   }
   protected good: IGood;
-  protected telegram: TelegramClient;
   protected log: Logger;
+  protected notifier: Notifier;
 
   public abstract priceCheck(page: puppeteer.Page): Promise<void>;
 
@@ -48,7 +48,7 @@ export default abstract class Merchant {
     const msg = `found ${prettyPercent(price, this.price)} discount for ${
       this.name
     }: ${this.URL}`;
-    this.telegram.sendMessage(msg);
+    this.notifier.send(msg);
     return msg;
   }
 

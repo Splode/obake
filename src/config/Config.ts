@@ -15,20 +15,20 @@ export class Config implements IConfig {
     return Config.instance;
   }
 
+  public notifications: INotifications<NotifierConfig>;
   public goods: IGood[] = [];
-  public telegram: ITelegram;
 
   private constructor(cfg: IRawConfig) {
+    this.notifications = cfg.notifications;
     this.goods = cfg.goods;
-    this.telegram = cfg.telegram;
   }
 
   private static instance: Config;
 }
 
 export interface IConfig {
+  notifications: INotifications<NotifierConfig>;
   goods: IGood[];
-  telegram?: ITelegram;
 }
 
 async function getConfigFile(filePath: string) {
@@ -45,12 +45,18 @@ async function loadConfig(filePath: string) {
   }
 }
 
-interface ITelegram {
+export interface ITelegram {
   URL: string;
-  chatID: string;
+  chat_id: string;
+}
+
+export type NotifierConfig = ITelegram;
+
+export interface INotifications<NotifierConfig> {
+  [Key: string]: NotifierConfig;
 }
 
 interface IRawConfig {
+  notifications: INotifications<NotifierConfig>;
   goods: IGood[];
-  telegram: ITelegram;
 }
