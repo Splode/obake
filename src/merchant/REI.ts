@@ -17,17 +17,17 @@ export default class REI extends Merchant {
         (el) => el.textContent
       );
     } catch (error) {
-      console.log(this.handleNotFoundPrice());
+      this.handleNotFoundPrice();
       return;
     }
 
     if (!priceString) return;
     const price = this.parsePrice(priceString);
 
-    console.log(this.handFoundPrice(price));
+    this.handFoundPrice(price);
 
     if (price < this.good.price) {
-      console.log(this.handleDiscount(price));
+      this.handleDiscount(price);
     }
     return;
   }
