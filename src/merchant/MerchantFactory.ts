@@ -1,8 +1,9 @@
-import AppStore from "./AppStore";
-import getHost from "../url";
 import Good from "../Good";
-import Merchant from "./Merchant";
+import getHost from "../url";
 import Amazon from "./Amazon";
+import AppStore from "./AppStore";
+import Merchant from "./Merchant";
+import REI from "./REI";
 
 export default class MerchantFactory {
   public static create(good: Good): Merchant | null {
@@ -16,6 +17,8 @@ export default class MerchantFactory {
         return new Amazon(good);
       case "apps.apple.com":
         return new AppStore(good);
+      case "www.rei.com":
+        return new REI(good);
       default:
         return null;
     }

@@ -1,8 +1,8 @@
-import Merchant from "./Merchant";
 import Good from "../Good";
+import Merchant from "./Merchant";
 import puppeteer from "puppeteer";
 
-export default class Amazon extends Merchant {
+export default class REI extends Merchant {
   public constructor(good: Good) {
     super(good);
   }
@@ -13,7 +13,7 @@ export default class Amazon extends Merchant {
     let priceString: string | null;
     try {
       priceString = await page.$eval(
-        "#priceblock_ourprice",
+        ".product-current-price > span",
         (el) => el.textContent
       );
     } catch (error) {
