@@ -1,9 +1,9 @@
 import Merchant from "./Merchant";
-import Good from "../config/Good";
+import IGood from "../config/IGood";
 import puppeteer from "puppeteer";
 
 export default class Amazon extends Merchant {
-  public constructor(good: Good) {
+  public constructor(good: IGood) {
     super(good);
   }
 

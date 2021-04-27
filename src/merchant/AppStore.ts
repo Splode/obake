@@ -1,9 +1,9 @@
 import puppeteer from "puppeteer";
-import Good from "../config/Good";
+import IGood from "../config/IGood";
 import Merchant from "./Merchant";
 
 export default class AppStore extends Merchant {
-  public constructor(good: Good) {
+  public constructor(good: IGood) {
     super(good);
   }
 

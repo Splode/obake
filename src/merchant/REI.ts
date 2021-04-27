@@ -1,9 +1,9 @@
-import Good from "../config/Good";
+import IGood from "../config/IGood";
 import Merchant from "./Merchant";
 import puppeteer from "puppeteer";
 
 export default class REI extends Merchant {
-  public constructor(good: Good) {
+  public constructor(good: IGood) {
     super(good);
   }
 

@@ -1,14 +1,14 @@
-import * as puppeteer from "puppeteer";
+import puppeteer from "puppeteer";
 import { parsePrice, prettyPercent } from "../strings";
-import Good from "../config/Good";
+import IGood from "../config/IGood";
 import Telegram from "../Telegram";
 
 export default abstract class Merchant {
-  public constructor(good: Good) {
+  public constructor(good: IGood) {
     this.good = good;
     this.telegram = new Telegram();
   }
-  protected good: Good;
+  protected good: IGood;
   protected telegram: Telegram;
 
   public abstract priceCheck(page: puppeteer.Page): Promise<void>;
@@ -47,5 +47,5 @@ export default abstract class Merchant {
 }
 
 // interface IChecker {
-//   priceCheck(page: puppeteer.Page, good: Good): Promise<void>;
+//   priceCheck(page: puppeteer.Page, good: IGood): Promise<void>;
 // }

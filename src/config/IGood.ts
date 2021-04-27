@@ -1,4 +1,4 @@
-export default interface Good {
+export default interface IGood {
   URL: string;
   name: string;
   price: number;

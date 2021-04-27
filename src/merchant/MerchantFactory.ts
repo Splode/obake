@@ -1,4 +1,4 @@
-import Good from "../config/Good";
+import IGood from "../config/IGood";
 import getHost from "../url";
 import Amazon from "./Amazon";
 import AppStore from "./AppStore";
@@ -6,11 +6,11 @@ import Merchant from "./Merchant";
 import REI from "./REI";
 
 export default class MerchantFactory {
-  public static create(good: Good): Merchant | null {
+  public static create(good: IGood): Merchant | null {
     return MerchantFactory.getMerchant(good);
   }
 
-  private static getMerchant(good: Good) {
+  private static getMerchant(good: IGood) {
     const host = getHost(good.URL);
     switch (host) {
       case "www.amazon.com":

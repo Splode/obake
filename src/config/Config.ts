@@ -1,6 +1,6 @@
 import toml from "toml";
 import readFile from "../file";
-import Good from "./Good";
+import IGood from "./IGood";
 
 export class Config implements IConfig {
   public static async getConfig(): Promise<Config> {
@@ -11,7 +11,7 @@ export class Config implements IConfig {
     return Config.instance;
   }
 
-  public goods: Good[] = [];
+  public goods: IGood[] = [];
   public telegram: ITelegram;
 
   private constructor(cfg: IRawConfig) {
@@ -23,7 +23,7 @@ export class Config implements IConfig {
 }
 
 export interface IConfig {
-  goods: Good[];
+  goods: IGood[];
   telegram?: ITelegram;
 }
 
@@ -47,6 +47,6 @@ interface ITelegram {
 }
 
 interface IRawConfig {
-  goods: Good[];
+  goods: IGood[];
   telegram: ITelegram;
 }
