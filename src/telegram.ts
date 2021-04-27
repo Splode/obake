@@ -10,7 +10,7 @@ class Message {
   }
 }
 
-export default class Telegram {
+export default class TelegramClient {
   private config: Config | null = null;
 
   public async sendMessage(msg: string): Promise<void> {

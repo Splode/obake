@@ -1,15 +1,15 @@
 import puppeteer from "puppeteer";
 import { parsePrice, prettyPercent } from "../strings";
 import IGood from "../config/IGood";
-import Telegram from "../Telegram";
+import TelegramClient from "../Telegram";
 
 export default abstract class Merchant {
   public constructor(good: IGood) {
     this.good = good;
-    this.telegram = new Telegram();
+    this.telegram = new TelegramClient();
   }
   protected good: IGood;
-  protected telegram: Telegram;
+  protected telegram: TelegramClient;
 
   public abstract priceCheck(page: puppeteer.Page): Promise<void>;
 
