@@ -1,8 +1,8 @@
-import puppeteer from "puppeteer";
-import Good from "../Good";
 import Merchant from "./Merchant";
+import Good from "../Good";
+import puppeteer from "puppeteer";
 
-export default class AppStore extends Merchant {
+export default class Amazon extends Merchant {
   public constructor(good: Good) {
     super(good);
   }
@@ -10,7 +10,7 @@ export default class AppStore extends Merchant {
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {
     await page.goto(good.URL);
     const priceString = await page.$eval(
-      ".app-header__list__item--price",
+      "#priceblock_ourprice",
       (el) => el.textContent
     );
 

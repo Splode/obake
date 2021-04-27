@@ -1,7 +1,7 @@
 import * as puppeteer from "puppeteer";
-import prettyPercent from "../strings";
+import { parsePrice, prettyPercent } from "../strings";
 import Good from "../Good";
-import Telegram from "../telegram";
+import Telegram from "../Telegram";
 
 export default abstract class Merchant {
   public constructor(good: Good) {
@@ -10,10 +10,24 @@ export default abstract class Merchant {
   }
   protected good: Good;
   protected telegram: Telegram;
-  public abstract URL: string;
-  public abstract name: string;
-  public abstract price: number;
+
   public abstract priceCheck(page: puppeteer.Page, good: Good): Promise<void>;
+
+  public get URL(): string {
+    return this.good.URL;
+  }
+
+  public get name(): string {
+    return this.good.name;
+  }
+
+  public get price(): number {
+    return this.good.price;
+  }
+
+  protected parsePrice(ps: string): number {
+    return parsePrice(ps);
+  }
 
   public handleDiscount(price: number): string {
     const msg = `found ${prettyPercent(price, this.price)} discount for ${
