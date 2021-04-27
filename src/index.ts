@@ -2,16 +2,18 @@ import puppeteer from "puppeteer";
 import { Config } from "./config/Config";
 import MerchantFactory from "./merchant/MerchantFactory";
 import parseFlags from "./flags";
+import Logger from "./Logger";
 
 main();
 
 async function main() {
   const args = parseFlags(process.argv);
+  const log = new Logger();
   console.log(args);
   const cfg = await Config.getConfig(args.config);
 
   if (!cfg) {
-    console.log(`failed to load config`);
+    log.error(`failed to load config`);
     process.exit(1);
   }
 

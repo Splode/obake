@@ -1,6 +1,9 @@
 import toml from "toml";
-import readFile from "../file";
 import IGood from "./IGood";
+import Logger from "../Logger";
+import readFile from "../file";
+
+const log = new Logger();
 
 export class Config implements IConfig {
   public static async getConfig(filePath?: string): Promise<Config | null> {
@@ -38,7 +41,7 @@ async function loadConfig(filePath: string) {
   try {
     return toml.parse(file);
   } catch (err) {
-    console.error(err);
+    log.error(err);
   }
 }
 

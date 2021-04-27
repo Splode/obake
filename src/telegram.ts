@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Config } from "./config/Config";
+import Logger from "./Logger";
 
 class Message {
   public chat_id: string;
@@ -12,6 +13,11 @@ class Message {
 
 export default class TelegramClient {
   private config: Config | null = null;
+  private log: Logger;
+
+  public constructor() {
+    this.log = new Logger();
+  }
 
   public async sendMessage(msg: string): Promise<void> {
     if (!this.config) {
@@ -20,13 +26,15 @@ export default class TelegramClient {
 
     if (!this.config || !this.config.telegram) return;
 
+    this.log.info(`sending message via telegram client: ${msg}`);
+
     try {
       await axios.post(
         this.config.telegram.URL,
         new Message(this.config.telegram.chatID, msg)
       );
     } catch (error) {
-      console.error(error);
+      this.log.error(error);
     }
   }
 
