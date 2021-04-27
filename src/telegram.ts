@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Config } from "./Config";
+import { Config } from "./config/Config";
 
 class Message {
   public chat_id: string;

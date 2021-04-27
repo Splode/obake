@@ -1,5 +1,5 @@
 import toml from "toml";
-import readFile from "./file";
+import readFile from "../file";
 import Good from "./Good";
 
 export class Config implements IConfig {

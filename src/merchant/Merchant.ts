@@ -1,6 +1,6 @@
 import * as puppeteer from "puppeteer";
 import { parsePrice, prettyPercent } from "../strings";
-import Good from "../Good";
+import Good from "../config/Good";
 import Telegram from "../Telegram";
 
 export default abstract class Merchant {

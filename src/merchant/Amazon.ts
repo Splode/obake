@@ -1,5 +1,5 @@
 import Merchant from "./Merchant";
-import Good from "../Good";
+import Good from "../config/Good";
 import puppeteer from "puppeteer";
 
 export default class Amazon extends Merchant {

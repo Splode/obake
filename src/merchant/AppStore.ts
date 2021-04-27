@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import Good from "../Good";
+import Good from "../config/Good";
 import Merchant from "./Merchant";
 
 export default class AppStore extends Merchant {

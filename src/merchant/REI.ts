@@ -1,4 +1,4 @@
-import Good from "../Good";
+import Good from "../config/Good";
 import Merchant from "./Merchant";
 import puppeteer from "puppeteer";
 

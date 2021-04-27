@@ -1,4 +1,4 @@
-import Good from "../Good";
+import Good from "../config/Good";
 import getHost from "../url";
 import Amazon from "./Amazon";
 import AppStore from "./AppStore";

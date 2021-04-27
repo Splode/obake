@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { Config } from "./Config";
+import { Config } from "./config/Config";
 import MerchantFactory from "./merchant/MerchantFactory";
 
 main();
