@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 
-async function readFile(filePath: string) {
+async function readFile(filePath: string): Promise<string | undefined> {
   try {
     const data = await fs.readFile(filePath);
     return data.toString();

@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 import { Config } from "./config";
 import Good from "./Good";
+import MerchantFactory from "./merchant/MerchantFactory";
 
 main();
 
@@ -10,7 +11,13 @@ async function main() {
   const browser = await puppeteer.launch();
 
   for (const good of cfg.goods) {
-    await screenGrab(browser, good);
+    const merchant = MerchantFactory.create(good);
+    if (merchant) {
+      const page = await browser.newPage();
+      await merchant.priceCheck(page, good);
+      await page.close();
+    }
+    // await screenGrab(browser, good);
   }
 
   await browser.close();
