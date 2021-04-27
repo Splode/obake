@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import winston, { createLogger, format, transports } from "winston";
+import { toSlashDate, toTime } from "./date";
 
 export default class Logger {
   public constructor() {
@@ -8,7 +9,8 @@ export default class Logger {
         new transports.Console({
           format: format.combine(formatConsole()),
         }),
-        new transports.Console({
+        new transports.File({
+          filename: "obake.log",
           format: format.combine(format.timestamp(), formatFile()),
         }),
       ],
@@ -48,7 +50,14 @@ function formatConsole(): winston.Logform.Format {
 
 function formatFile(): winston.Logform.Format {
   return format.printf(({ level, message, timestamp }) => {
-    const msg = `${formatLevel(level)}: ${timestamp} ${message}`;
+    const msg = `${formatLevel(level)}: ${formatTimestamp(
+      timestamp
+    )} ${message}`;
     return msg;
   });
+}
+
+function formatTimestamp(ts: string): string {
+  const d = new Date(ts);
+  return `${toSlashDate(d)} ${toTime(d)}`;
 }

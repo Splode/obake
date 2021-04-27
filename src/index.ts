@@ -9,7 +9,6 @@ main();
 async function main() {
   const args = parseFlags(process.argv);
   const log = new Logger();
-  console.log(args);
   const cfg = await Config.getConfig(args.config);
 
   if (!cfg) {

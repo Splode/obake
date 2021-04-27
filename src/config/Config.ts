@@ -1,7 +1,7 @@
 import toml from "toml";
 import IGood from "./IGood";
 import Logger from "../Logger";
-import readFile from "../file";
+import { readFile } from "../file";
 
 const log = new Logger();
 
