@@ -3,8 +3,9 @@ import readFile from "../file";
 import IGood from "./IGood";
 
 export class Config implements IConfig {
-  public static async getConfig(filePath: string): Promise<Config> {
+  public static async getConfig(filePath?: string): Promise<Config | null> {
     if (!Config.instance) {
+      if (!filePath) return null;
       const cfg = await loadConfig(filePath);
       Config.instance = new Config(cfg);
     }

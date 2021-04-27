@@ -10,6 +10,11 @@ async function main() {
   console.log(args);
   const cfg = await Config.getConfig(args.config);
 
+  if (!cfg) {
+    console.log(`failed to load config`);
+    process.exit(1);
+  }
+
   const browser = await puppeteer.launch();
 
   for (const good of cfg.goods) {

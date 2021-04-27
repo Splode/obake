@@ -11,7 +11,7 @@ class Message {
 }
 
 export default class Telegram {
-  private config?: Config;
+  private config: Config | null = null;
 
   public async sendMessage(msg: string): Promise<void> {
     if (!this.config) {
