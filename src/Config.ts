@@ -2,7 +2,7 @@ import toml from "toml";
 import readFile from "./file";
 import Good from "./Good";
 
-export class Config implements Config {
+export class Config implements IConfig {
   public static async getConfig(): Promise<Config> {
     if (!Config.instance) {
       const cfg = await loadConfig();
@@ -12,16 +12,19 @@ export class Config implements Config {
   }
 
   public goods: Good[] = [];
+  public telegram: ITelegram;
 
-  private constructor(cfg: rawConfig) {
+  private constructor(cfg: IRawConfig) {
     this.goods = cfg.goods;
+    this.telegram = cfg.telegram;
   }
 
   private static instance: Config;
 }
 
-export interface Config {
+export interface IConfig {
   goods: Good[];
+  telegram?: ITelegram;
 }
 
 async function getConfigFile(filePath: string) {
@@ -38,6 +41,12 @@ async function loadConfig() {
   }
 }
 
-interface rawConfig {
+interface ITelegram {
+  URL: string;
+  chatID: string;
+}
+
+interface IRawConfig {
   goods: Good[];
+  telegram: ITelegram;
 }

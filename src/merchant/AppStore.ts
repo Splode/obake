@@ -1,5 +1,4 @@
 import puppeteer from "puppeteer";
-import prettyPercent from "../strings";
 import Good from "../Good";
 import Merchant from "./Merchant";
 
@@ -30,14 +29,10 @@ export default class AppStore extends Merchant {
     if (!priceString) return;
     const price = this.parsePrice(priceString);
 
-    console.log(`found price ${price} for ${this.name}`);
+    console.log(this.handFoundPrice(price));
 
     if (price < this.good.price) {
-      console.log(
-        `found ${prettyPercent(price, this.price)} discount for ${this.name}: ${
-          this.URL
-        }`
-      );
+      console.log(this.handleDiscount(price));
     }
     return;
   }
