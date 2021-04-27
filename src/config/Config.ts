@@ -3,9 +3,9 @@ import readFile from "../file";
 import IGood from "./IGood";
 
 export class Config implements IConfig {
-  public static async getConfig(): Promise<Config> {
+  public static async getConfig(filePath: string): Promise<Config> {
     if (!Config.instance) {
-      const cfg = await loadConfig();
+      const cfg = await loadConfig(filePath);
       Config.instance = new Config(cfg);
     }
     return Config.instance;
@@ -31,8 +31,8 @@ async function getConfigFile(filePath: string) {
   return await readFile(filePath);
 }
 
-async function loadConfig() {
-  const file = await getConfigFile("config.toml");
+async function loadConfig(filePath: string) {
+  const file = await getConfigFile(filePath);
   if (!file) return;
   try {
     return toml.parse(file);

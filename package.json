@@ -16,9 +16,11 @@
     "puppeteer": "^9.0.0",
     "toml": "^3.0.0",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
+    "@types/yargs": "^16.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
