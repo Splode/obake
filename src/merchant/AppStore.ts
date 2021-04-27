@@ -7,8 +7,8 @@ export default class AppStore extends Merchant {
     super(good);
   }
 
-  public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {
-    await page.goto(good.URL);
+  public async priceCheck(page: puppeteer.Page): Promise<void> {
+    await page.goto(this.URL);
     const priceString = await page.$eval(
       ".app-header__list__item--price",
       (el) => el.textContent

@@ -13,7 +13,7 @@ async function main() {
     const merchant = MerchantFactory.create(good);
     if (merchant) {
       const page = await browser.newPage();
-      await merchant.priceCheck(page, good);
+      await merchant.priceCheck(page);
       await page.close();
     }
   }

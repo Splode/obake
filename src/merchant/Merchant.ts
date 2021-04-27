@@ -11,7 +11,7 @@ export default abstract class Merchant {
   protected good: Good;
   protected telegram: Telegram;
 
-  public abstract priceCheck(page: puppeteer.Page, good: Good): Promise<void>;
+  public abstract priceCheck(page: puppeteer.Page): Promise<void>;
 
   public get URL(): string {
     return this.good.URL;
