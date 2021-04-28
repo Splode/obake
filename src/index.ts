@@ -5,7 +5,9 @@ import parseFlags from "./flags";
 import Logger from "./Logger";
 import Notifier from "./message/Notifier";
 
-main();
+(async () => {
+  await main();
+})();
 
 async function main() {
   const args = parseFlags(process.argv);
@@ -21,7 +23,10 @@ async function main() {
 
   const notifier = new Notifier(cfg);
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch().catch((error) => {
+    log.error(`failed to launch puppeteer instance: ${error}`);
+    process.exit(1);
+  });
 
   for (const good of cfg.goods) {
     if (!good.disabled) {
@@ -34,5 +39,8 @@ async function main() {
     }
   }
 
-  await browser.close();
+  await browser.close().catch((err) => {
+    log.error(`failed to dispose browser: ${err}`);
+    process.exit(1);
+  });
 }

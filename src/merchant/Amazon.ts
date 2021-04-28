@@ -9,18 +9,17 @@ export default class Amazon extends Merchant {
   }
 
   public async priceCheck(page: puppeteer.Page): Promise<void> {
-    await page.goto(this.URL);
-
-    let priceString: string | null;
-    try {
-      priceString = await page.$eval(
-        "#priceblock_ourprice",
-        (el) => el.textContent
-      );
-    } catch (error) {
-      this.handleNotFoundPrice();
+    await page.goto(this.URL).catch((error) => {
+      this.log.error(`failed to make request: ${error}`);
       return;
-    }
+    });
+
+    const priceString = await page
+      .$eval("#priceblock_ourprice", (el) => el.textContent)
+      .catch(() => {
+        this.handleNotFoundPrice();
+        return;
+      });
 
     if (!priceString) return;
     const price = this.parsePrice(priceString);
