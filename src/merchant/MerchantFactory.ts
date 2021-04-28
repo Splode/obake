@@ -4,6 +4,7 @@ import getHost from "../url";
 import Amazon from "./Amazon";
 import AppStore from "./AppStore";
 import Merchant from "./Merchant";
+import NewEgg from "./NewEgg";
 import REI from "./REI";
 
 export default class MerchantFactory {
@@ -18,6 +19,8 @@ export default class MerchantFactory {
         return new Amazon(good, notifier);
       case "apps.apple.com":
         return new AppStore(good, notifier);
+      case "www.newegg.com":
+        return new NewEgg(good, notifier);
       case "www.rei.com":
         return new REI(good, notifier);
       default:

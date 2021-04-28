@@ -33,7 +33,9 @@ export default abstract class Merchant {
   }
 
   protected handleDiscount(price: number): void {
-    this.log.info(this.getDiscountText(price));
+    const msg = this.getDiscountText(price);
+    this.log.info(msg);
+    this.notifier.send(msg);
   }
 
   protected handFoundPrice(price: number): void {
@@ -45,11 +47,9 @@ export default abstract class Merchant {
   }
 
   private getDiscountText(price: number): string {
-    const msg = `found ${prettyPercent(price, this.price)} discount for ${
+    return `found ${prettyPercent(price, this.price)} discount for ${
       this.name
     }: ${this.URL}`;
-    this.notifier.send(msg);
-    return msg;
   }
 
   private getFoundPriceText(price: number): string {

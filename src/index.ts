@@ -17,6 +17,8 @@ async function main() {
     process.exit(1);
   }
 
+  log.info("starting obake...");
+
   const notifier = new Notifier(cfg);
 
   const browser = await puppeteer.launch();
@@ -33,5 +35,4 @@ async function main() {
   }
 
   await browser.close();
-  process.exit(0);
 }
