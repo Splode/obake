@@ -1,7 +1,9 @@
 import TelegramClient from "./Telegram";
-import { Config } from "../config/Config";
+import { Config, IDesktop, ITelegram } from "../config/Config";
+import DesktopClient from "./Desktop";
 
 export interface IMessager {
+  disabled: boolean;
   sendMessage(msg: string): void;
 }
 
@@ -20,7 +22,9 @@ export default class Notifier {
 
   public send(msg: string): void {
     this.messengers.forEach((m) => {
-      m.sendMessage(msg);
+      if (!m.disabled) {
+        m.sendMessage(msg);
+      }
     });
   }
 
@@ -29,8 +33,11 @@ export default class Notifier {
     Object.keys(notes).forEach((k) => {
       const cfg = notes[k];
       switch (k) {
+        case "desktop":
+          this.add(new DesktopClient(cfg as IDesktop));
+          return;
         case "telegram":
-          this.add(new TelegramClient(cfg));
+          this.add(new TelegramClient(cfg as ITelegram));
           break;
         default:
           break;

@@ -1,4 +1,5 @@
 import toml from "toml";
+import IDisableable from "./IDisableable";
 import IGood from "./IGood";
 import { readFile } from "../file";
 
@@ -45,12 +46,16 @@ async function parseConfig(filePath: string) {
   return toml.parse(file);
 }
 
-export interface ITelegram {
+export interface IDesktop extends IDisableable {
+  sound?: boolean;
+}
+
+export interface ITelegram extends IDisableable {
   URL: string;
   chat_id: string;
 }
 
-export type NotifierConfig = ITelegram;
+export type NotifierConfig = IDesktop | ITelegram;
 
 export interface INotifications<NotifierConfig> {
   [Key: string]: NotifierConfig;

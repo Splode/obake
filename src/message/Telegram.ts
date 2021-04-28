@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ITelegram } from "../config/Config";
-import Logger from "../Logger";
 import { IMessager } from "./Notifier";
 
 class Message {
@@ -13,25 +12,25 @@ class Message {
 }
 
 export default class TelegramClient implements IMessager {
-  private URL: string;
-  private chat_id: string;
-  private log: Logger;
+  private config: ITelegram;
 
   public constructor(cfg: ITelegram) {
-    this.log = new Logger();
-    this.URL = cfg.URL;
-    this.chat_id = cfg.chat_id;
+    this.config = cfg;
+  }
+
+  public get disabled(): boolean {
+    return Boolean(this.config.disabled)
   }
 
   public async sendMessage(msg: string): Promise<void> {
-    if (!this.URL || !this.chat_id) return;
+    if (!this.config.URL || !this.config.chat_id) return;
 
-    this.log.info(`sending message via telegram client: ${msg}`);
+    // this.log.info(`sending message via telegram client: ${msg}`);
 
     try {
-      await axios.post(this.URL, new Message(this.chat_id, msg));
+      await axios.post(this.config.URL, new Message(this.config.chat_id, msg));
     } catch (error) {
-      this.log.error(error);
+      // this.log.error(error);
     }
   }
 }
