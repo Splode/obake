@@ -9,8 +9,9 @@ export default class NewEgg extends Merchant {
   }
 
   public async priceCheck(page: puppeteer.Page): Promise<void> {
-    await page.goto(this.URL).catch(() => this.handleRequestError);
-    await page.waitForTimeout(1200); // wait for JS execution
+    await page
+      .goto(this.URL, { waitUntil: "networkidle2" })
+      .catch(() => this.handleRequestError);
 
     const priceString = await page
       .$eval(".price-current", (el) => el.textContent)
