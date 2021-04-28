@@ -15,7 +15,7 @@ async function main() {
   const cfg = await Config.getConfig(args.config);
 
   if (!cfg) {
-    log.error(`failed to load config`);
+    log.crit(`failed to load config`);
     process.exit(1);
   }
 
@@ -24,7 +24,7 @@ async function main() {
   const notifier = new Notifier(cfg);
 
   const browser = await puppeteer.launch().catch((error) => {
-    log.error(`failed to launch puppeteer instance: ${error}`);
+    log.crit(`failed to launch puppeteer instance: ${error}`);
     process.exit(1);
   });
 
@@ -40,7 +40,7 @@ async function main() {
   }
 
   await browser.close().catch((err) => {
-    log.error(`failed to dispose browser: ${err}`);
+    log.crit(`failed to dispose browser: ${err}`);
     process.exit(1);
   });
 }

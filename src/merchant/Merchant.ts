@@ -43,7 +43,13 @@ export default abstract class Merchant {
   }
 
   protected handleNotFoundPrice(): void {
-    this.log.error(this.getNotFoundPriceText());
+    this.log.warn(this.getNotFoundPriceText());
+  }
+
+  protected handleRequestError(): void {
+    const err = new Error(`failed to make request: ${this.URL}`);
+    this.log.error(err.message);
+    throw err;
   }
 
   private getDiscountText(price: number): string {

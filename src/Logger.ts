@@ -5,6 +5,7 @@ import { toSlashDate, toTime } from "./date";
 export default class Logger {
   public constructor() {
     this.logger = createLogger({
+      levels: winston.config.syslog.levels,
       transports: [
         new transports.Console({
           format: format.combine(formatConsole()),
@@ -19,8 +20,16 @@ export default class Logger {
 
   private logger: winston.Logger;
 
+  public crit(msg: string): void {
+    this.logger.crit(msg);
+  }
+
   public error(msg: string): void {
     this.logger.error(msg);
+  }
+
+  public warn(msg: string): void {
+    this.logger.warning(msg);
   }
 
   public info(msg: string): void {
@@ -32,10 +41,14 @@ function formatLevel(level: string, color = false): string {
   const l = level.toUpperCase();
   if (!color) return l;
   switch (level) {
+    case "crit":
+      return chalk.black.bgRed(l);
+    case "error":
+      return chalk.redBright(l);
     case "info":
       return chalk.blue(l);
-    case "error":
-      return chalk.red(l);
+    case "warning":
+      return chalk.yellow(l);
     default:
       return l;
   }
