@@ -19,18 +19,19 @@ export default class TelegramClient implements IMessager {
   }
 
   public get disabled(): boolean {
-    return Boolean(this.config.disabled)
+    return Boolean(this.config.disabled);
+  }
+
+  public get name(): string {
+    return "telegram";
   }
 
   public async sendMessage(msg: string): Promise<void> {
     if (!this.config.URL || !this.config.chat_id) return;
-
-    // this.log.info(`sending message via telegram client: ${msg}`);
-
-    try {
-      await axios.post(this.config.URL, new Message(this.config.chat_id, msg));
-    } catch (error) {
-      // this.log.error(error);
-    }
+    await axios
+      .post(this.config.URL, new Message(this.config.chat_id, msg))
+      .catch((err) => {
+        throw err;
+      });
   }
 }

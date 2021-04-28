@@ -1,18 +1,22 @@
 import TelegramClient from "./Telegram";
 import { Config, IDesktop, ITelegram } from "../config/Config";
 import DesktopClient from "./Desktop";
+import Logger from "../Logger";
 
 export interface IMessager {
   disabled: boolean;
-  sendMessage(msg: string): void;
+  name: string;
+  sendMessage(msg: string): Promise<void>;
 }
 
 export default class Notifier {
   private config: Config;
+  private log: Logger;
   private messengers: IMessager[] = [];
 
   public constructor(cfg: Config) {
     this.config = cfg;
+    this.log = new Logger();
     this.initMessagers();
   }
 
@@ -21,9 +25,14 @@ export default class Notifier {
   }
 
   public send(msg: string): void {
-    this.messengers.forEach((m) => {
+    this.messengers.forEach(async (m) => {
       if (!m.disabled) {
-        m.sendMessage(msg);
+        this.log.info(`sending message via ${m.name} client: ${msg}`);
+        await m.sendMessage(msg).catch((err: Error) => {
+          this.log.error(
+            `failed to send message via ${m.name} client: ${err.message}`
+          );
+        });
       }
     });
   }

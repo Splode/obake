@@ -12,11 +12,20 @@ export default class DesktopClient implements IMessager {
     return Boolean(this.config.disabled);
   }
 
-  public sendMessage(msg: string): void {
-    notifier.notify({
-      title: "Obake",
-      message: msg,
-      sound: this.config.sound,
-    });
+  public get name(): string {
+    return "desktop";
+  }
+
+  public async sendMessage(msg: string): Promise<void> {
+    notifier.notify(
+      {
+        title: "Obake",
+        message: msg,
+        sound: this.config.sound,
+      },
+      (err) => {
+        throw err;
+      }
+    );
   }
 }
