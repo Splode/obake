@@ -12,12 +12,10 @@ import Notifier from "./message/Notifier";
 async function main() {
   const args = parseFlags(process.argv);
   const log = new Logger();
-  const cfg = await Config.getConfig(args.config);
-
-  if (!cfg) {
-    log.crit(`failed to load config`);
+  const cfg = await Config.getConfig(args.config).catch((err) => {
+    log.crit(`failed to load config: ${err}`);
     process.exit(1);
-  }
+  });
 
   log.info("starting obake...");
 

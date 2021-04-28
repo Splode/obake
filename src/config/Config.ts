@@ -1,15 +1,13 @@
 import toml from "toml";
 import IGood from "./IGood";
-import Logger from "../Logger";
 import { readFile } from "../file";
 
-const log = new Logger();
-
 export class Config implements IConfig {
-  public static async getConfig(filePath?: string): Promise<Config | null> {
+  public static async getConfig(filePath: string): Promise<Config> {
     if (!Config.instance) {
-      if (!filePath) return null;
-      const cfg = await loadConfig(filePath);
+      const cfg = await parseConfig(filePath).catch((err) => {
+        throw err;
+      });
       Config.instance = new Config(cfg);
     }
     return Config.instance;
@@ -32,17 +30,19 @@ export interface IConfig {
 }
 
 async function getConfigFile(filePath: string) {
-  return await readFile(filePath);
+  return await readFile(filePath).catch((err) => {
+    throw err;
+  });
 }
 
-async function loadConfig(filePath: string) {
-  const file = await getConfigFile(filePath);
-  if (!file) return;
-  try {
-    return toml.parse(file);
-  } catch (err) {
-    log.error(err);
+async function parseConfig(filePath: string) {
+  const file = await getConfigFile(filePath).catch((err) => {
+    throw err;
+  });
+  if (!file) {
+    throw new Error(`received invalid config file`);
   }
+  return toml.parse(file);
 }
 
 export interface ITelegram {

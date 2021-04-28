@@ -1,16 +1,12 @@
 import fs from "fs/promises";
 import process from "process";
 import os from "os";
-import Logger from "./Logger";
 
 export async function readFile(filePath: string): Promise<string | undefined> {
-  try {
-    const data = await fs.readFile(filePath);
-    return data.toString();
-  } catch (err) {
-    const log = new Logger();
-    log.error(err);
-  }
+  const data = await fs.readFile(filePath).catch((err) => {
+    throw err;
+  });
+  return data.toString();
 }
 
 export function getUserData(): string | undefined {
