@@ -9,11 +9,7 @@ export default class NewEgg extends Merchant {
   }
 
   public async priceCheck(page: puppeteer.Page): Promise<void> {
-    // TODO: make this a standard error handler
-    await page.goto(this.URL).catch((error) => {
-      this.log.error(`failed to make request: ${error}`);
-      return;
-    });
+    await page.goto(this.URL).catch(() => this.handleRequestError);
     await page.waitForTimeout(1200); // wait for JS execution
 
     const priceString = await page
