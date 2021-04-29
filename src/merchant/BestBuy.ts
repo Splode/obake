@@ -1,11 +1,15 @@
 import puppeteer from "puppeteer";
-import Notifier from "../message/Notifier";
 import IGood from "../config/IGood";
+import Notifier from "../message/Notifier";
 import Merchant from "./Merchant";
 
-export default class AppStore extends Merchant {
+export default class BestBuy extends Merchant {
   public constructor(good: IGood, notifier: Notifier) {
     super(good, notifier);
+  }
+
+  public get isHeadless(): boolean {
+    return false;
   }
 
   public async priceCheck(page: puppeteer.Page): Promise<void> {
@@ -13,8 +17,18 @@ export default class AppStore extends Merchant {
       .goto(this.URL, { waitUntil: "networkidle2" })
       .catch(() => this.handleRequestError);
 
+    const url = new URL(this.URL);
+    const sku = url.searchParams.get("skuId")
+    if (!sku) {
+      // TODO: reject with error
+      return
+    }
+
     const priceString = await page
-      .$eval(".app-header__list__item--price", (el) => el.textContent)
+      .$eval(
+        `[data-skuid='${sku}'] .priceView-customer-price > span`,
+        (el) => el.textContent
+      )
       .catch(() => {
         this.handleNotFoundPrice();
         return;
@@ -25,9 +39,8 @@ export default class AppStore extends Merchant {
 
     this.handFoundPrice(price);
 
-    if (price < this.good.price) {
+    if (price < this.price) {
       this.handleDiscount(price);
     }
-    return;
   }
 }
