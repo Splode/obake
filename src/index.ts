@@ -4,6 +4,7 @@ import MerchantFactory from "./merchant/MerchantFactory";
 import parseFlags from "./flags";
 import Logger from "./Logger";
 import Notifier from "./message/Notifier";
+import EventEmitter from "events";
 
 (async () => {
   await main();
@@ -21,24 +22,27 @@ async function main() {
 
   const notifier = new Notifier(cfg);
 
-  const browser = await puppeteer.launch().catch((error) => {
-    log.crit(`failed to launch puppeteer instance: ${error}`);
-    process.exit(1);
-  });
+  // needed for disabling node warnings due to async browser launching
+  EventEmitter.defaultMaxListeners = cfg.goods.length;
 
-  for (const good of cfg.goods) {
+  cfg.goods.forEach(async (good) => {
     if (!good.disabled) {
       const merchant = MerchantFactory.create(good, notifier);
       if (merchant) {
+        const browser = await puppeteer
+          .launch({ headless: merchant.isHeadless })
+          .catch((error) => {
+            log.crit(`failed to launch puppeteer instance: ${error}`);
+            process.exit(1);
+          });
         const page = await browser.newPage();
         await merchant.priceCheck(page);
         await page.close();
+        await browser.close().catch((err) => {
+          log.crit(`failed to dispose browser: ${err}`);
+          process.exit(1);
+        });
       }
     }
-  }
-
-  await browser.close().catch((err) => {
-    log.crit(`failed to dispose browser: ${err}`);
-    process.exit(1);
   });
 }

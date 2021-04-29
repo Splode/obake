@@ -14,6 +14,10 @@ export default abstract class Merchant {
   protected log: Logger;
   protected notifier: Notifier;
 
+  public get isHeadless(): boolean {
+    return true;
+  }
+
   public abstract priceCheck(page: puppeteer.Page): Promise<void>;
 
   public get URL(): string {
