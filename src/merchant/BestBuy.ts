@@ -18,10 +18,10 @@ export default class BestBuy extends Merchant {
       .catch(() => this.handleRequestError);
 
     const url = new URL(this.URL);
-    const sku = url.searchParams.get("skuId")
+    const sku = url.searchParams.get("skuId");
     if (!sku) {
       // TODO: reject with error
-      return
+      return;
     }
 
     const priceString = await page
