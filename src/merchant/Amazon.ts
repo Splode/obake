@@ -9,7 +9,7 @@ export default class Amazon extends Merchant {
   }
 
   public get isHeadless(): boolean {
-    return true;
+    return false;
   }
 
   public get prettyName(): string {
