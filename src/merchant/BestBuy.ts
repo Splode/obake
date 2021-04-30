@@ -47,7 +47,7 @@ export default class BestBuy extends Merchant {
 
     if (this.isUnvailable(String(cartText))) {
       this.handleUnavailable(good);
-      return
+      return;
     }
 
     if (!priceString) return;
