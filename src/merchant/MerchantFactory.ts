@@ -63,6 +63,7 @@ export default class MerchantFactory {
       }
 
       m?.addGoods(good);
+      good.merchant = m || null;
     });
 
     return mLs;

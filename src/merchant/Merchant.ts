@@ -14,17 +14,22 @@ export default abstract class Merchant {
     this.log = new Logger();
   }
 
+  public abstract get prettyName(): string;
+
+  public abstract priceCheck(page: puppeteer.Page, good: Good): Promise<void>;
+
   public get isHeadless(): boolean {
     return true;
   }
 
-  public abstract get name(): string;
-
-  public abstract priceCheck(page: puppeteer.Page, good: Good): Promise<void>;
+  public get name(): string {
+    return this.prettyName.toLowerCase().replace(" ", "");
+  }
 
   public async checkGoods(): Promise<void> {
-    // TODO: check if there's at least 1 good that isn't disabled
     if (this.goods.length <= 0) return;
+    if (!this.hasActiveGood()) return;
+
     const browser = await puppeteer
       .launch({ headless: this.isHeadless })
       .catch((err) => {
@@ -79,6 +84,10 @@ export default abstract class Merchant {
     const err = new Error(`failed to make request: ${good.URL}`);
     this.log.error(err.message);
     throw err;
+  }
+
+  private hasActiveGood(): boolean {
+    return this.goods.some((good) => !good.disabled);
   }
 }
 

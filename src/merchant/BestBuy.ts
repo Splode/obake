@@ -12,8 +12,8 @@ export default class BestBuy extends Merchant {
     return false;
   }
 
-  public get name(): string {
-    return "bestbuy";
+  public get prettyName(): string {
+    return "Best Buy";
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {

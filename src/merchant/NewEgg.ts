@@ -8,8 +8,8 @@ export default class NewEgg extends Merchant {
     super(notifier);
   }
 
-  public get name(): string {
-    return "newegg";
+  public get prettyName(): string {
+    return "Newegg";
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {

@@ -1,5 +1,6 @@
 import IDisableable from "../config/IDisableable";
 import { prettyPercent } from "../strings";
+import Merchant from "./Merchant";
 
 export interface IGood extends IDisableable {
   URL: string;
@@ -12,6 +13,7 @@ export default class Good implements IGood {
   public name: string;
   public price: number;
   public disabled: boolean;
+  public merchant: Merchant | null = null;
 
   public constructor(good: IGood) {
     this.URL = good.URL;
@@ -27,7 +29,7 @@ export default class Good implements IGood {
   }
 
   public getFoundPriceText(price: number): string {
-    return `found price ${price} for ${this.name}`;
+    return `found price ${price} for ${this.name} at ${this.merchant?.prettyName}`;
   }
 
   public getNotFoundPriceText(): string {

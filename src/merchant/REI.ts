@@ -8,8 +8,8 @@ export default class REI extends Merchant {
     super(notifier);
   }
 
-  public get name(): string {
-    return "rei";
+  public get prettyName(): string {
+    return "REI";
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {

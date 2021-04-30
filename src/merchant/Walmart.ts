@@ -12,8 +12,8 @@ export default class Walmart extends Merchant {
     return false;
   }
 
-  public get name(): string {
-    return "walmart";
+  public get prettyName(): string {
+    return "Walmart";
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {

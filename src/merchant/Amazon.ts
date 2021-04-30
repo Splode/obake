@@ -8,8 +8,8 @@ export default class Amazon extends Merchant {
     super(notifier);
   }
 
-  public get name(): string {
-    return "amazon";
+  public get prettyName(): string {
+    return "Amazon";
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {

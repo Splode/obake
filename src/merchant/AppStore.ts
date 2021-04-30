@@ -8,8 +8,8 @@ export default class AppStore extends Merchant {
     super(notifier);
   }
 
-  public get name(): string {
-    return "appstore";
+  public get prettyName(): string {
+    return "AppStore";
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {
