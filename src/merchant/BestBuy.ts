@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
-import Good from "./Good";
 import Notifier from "../message/Notifier";
+import Good from "./Good";
 import Merchant from "./Merchant";
 
 export default class BestBuy extends Merchant {

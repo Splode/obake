@@ -24,7 +24,7 @@ export default class Good implements IGood {
   }
 
   public getDiscountText(price: number): string {
-    return `found ${prettyPercent(price, this.price)} discount for ${
+    return `found ${prettyPercent(price, this.price)} off strike price ${
       this.name
     }: ${this.URL}`;
   }

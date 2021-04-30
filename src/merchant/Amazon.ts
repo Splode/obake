@@ -1,11 +1,15 @@
-import Merchant from "./Merchant";
-import Good from "./Good";
 import puppeteer from "puppeteer";
 import Notifier from "../message/Notifier";
+import Good from "./Good";
+import Merchant from "./Merchant";
 
 export default class Amazon extends Merchant {
   public constructor(notifier: Notifier) {
     super(notifier);
+  }
+
+  public get isHeadless(): boolean {
+    return true;
   }
 
   public get prettyName(): string {

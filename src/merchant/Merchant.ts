@@ -1,9 +1,9 @@
 import chalk from "chalk";
 import puppeteer from "puppeteer";
+import Notifier from "src/message/Notifier";
+import Logger from "../Logger";
 import { elide, parsePrice } from "../strings";
 import Good from "./Good";
-import Logger from "../Logger";
-import Notifier from "src/message/Notifier";
 
 export default abstract class Merchant {
   protected goods: Good[] = [];

@@ -1,9 +1,9 @@
+import EventEmitter from "events";
 import { Config } from "./config/Config";
-import MerchantFactory from "./merchant/MerchantFactory";
 import parseFlags from "./flags";
 import Logger from "./Logger";
+import MerchantFactory from "./merchant/MerchantFactory";
 import Notifier from "./message/Notifier";
-import EventEmitter from "events";
 
 (async () => {
   await main();

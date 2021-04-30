@@ -1,7 +1,7 @@
-import TelegramClient from "./Telegram";
 import { Config, IDesktop, ITelegram } from "../config/Config";
-import DesktopClient from "./Desktop";
 import Logger from "../Logger";
+import DesktopClient from "./Desktop";
+import TelegramClient from "./Telegram";
 
 export interface IMessager {
   disabled: boolean;

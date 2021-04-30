@@ -1,7 +1,7 @@
 import toml from "toml";
-import IDisableable from "./IDisableable";
-import Good, { IGood } from "../merchant/Good";
 import { readFile } from "../file";
+import Good, { IGood } from "../merchant/Good";
+import IDisableable from "./IDisableable";
 
 export class Config implements IConfig {
   public static async getConfig(filePath: string): Promise<Config> {

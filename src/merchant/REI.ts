@@ -1,7 +1,7 @@
-import Good from "./Good";
-import Merchant from "./Merchant";
 import puppeteer from "puppeteer";
 import Notifier from "../message/Notifier";
+import Good from "./Good";
+import Merchant from "./Merchant";
 
 export default class REI extends Merchant {
   public constructor(notifier: Notifier) {

@@ -1,6 +1,6 @@
 import fs from "fs/promises";
-import process from "process";
 import os from "os";
+import process from "process";
 
 export async function readFile(filePath: string): Promise<string | undefined> {
   const data = await fs.readFile(filePath).catch((err) => {
