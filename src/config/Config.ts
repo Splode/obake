@@ -1,6 +1,6 @@
 import toml from "toml";
 import IDisableable from "./IDisableable";
-import IGood from "./IGood";
+import Good, { IGood } from "../merchant/Good";
 import { readFile } from "../file";
 
 export class Config implements IConfig {
@@ -15,11 +15,13 @@ export class Config implements IConfig {
   }
 
   public notifications: INotifications<NotifierConfig>;
-  public goods: IGood[] = [];
+  public goods: Good[] = [];
 
   private constructor(cfg: IRawConfig) {
     this.notifications = cfg.notifications;
-    this.goods = cfg.goods;
+    cfg.goods.forEach((g) => {
+      this.goods.push(new Good(g));
+    });
   }
 
   private static instance: Config;
@@ -27,7 +29,7 @@ export class Config implements IConfig {
 
 export interface IConfig {
   notifications: INotifications<NotifierConfig>;
-  goods: IGood[];
+  goods: Good[];
 }
 
 async function getConfigFile(filePath: string) {

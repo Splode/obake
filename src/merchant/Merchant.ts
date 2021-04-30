@@ -1,73 +1,84 @@
 import puppeteer from "puppeteer";
-import { parsePrice, prettyPercent } from "../strings";
-import IGood from "../config/IGood";
+import { parsePrice } from "../strings";
+import Good from "./Good";
 import Logger from "../Logger";
 import Notifier from "src/message/Notifier";
 
 export default abstract class Merchant {
-  public constructor(good: IGood, notifier: Notifier) {
-    this.good = good;
+  protected goods: Good[] = [];
+  protected log: Logger;
+  protected notifier: Notifier;
+
+  public constructor(notifier: Notifier) {
     this.notifier = notifier;
     this.log = new Logger();
   }
-  protected good: IGood;
-  protected log: Logger;
-  protected notifier: Notifier;
 
   public get isHeadless(): boolean {
     return true;
   }
 
-  public abstract priceCheck(page: puppeteer.Page): Promise<void>;
+  public abstract get name(): string;
 
-  public get URL(): string {
-    return this.good.URL;
+  public abstract priceCheck(page: puppeteer.Page, good: Good): Promise<void>;
+
+  public async checkGoods(): Promise<void> {
+    // TODO: check if there's at least 1 good that isn't disabled
+    if (this.goods.length <= 0) return;
+    const browser = await puppeteer
+      .launch({ headless: this.isHeadless })
+      .catch((err) => {
+        throw err;
+      });
+
+    const check = async (good: Good) => {
+      if (!good.disabled) {
+        const page = await browser.newPage().catch((err) => {
+          this.log.error(err);
+        });
+        if (page) {
+          await this.priceCheck(page, good).catch((err) => {
+            this.log.error(err);
+          });
+          await page.close().catch((err) => {
+            this.log.error(err);
+          });
+        }
+      }
+    };
+    await Promise.all(this.goods.map(check));
+
+    await browser.close().catch((err) => {
+      throw err;
+    });
   }
 
-  public get name(): string {
-    return this.good.name;
-  }
-
-  public get price(): number {
-    return this.good.price;
+  public addGoods(...goods: Good[]): void {
+    goods.forEach((g) => this.goods.push(g));
   }
 
   protected parsePrice(ps: string): number {
     return parsePrice(ps);
   }
 
-  protected handleDiscount(price: number): void {
-    const msg = this.getDiscountText(price);
+  protected handleDiscount(price: number, good: Good): void {
+    const msg = good.getDiscountText(price);
     this.log.info(msg);
     this.notifier.send(msg);
   }
 
-  protected handFoundPrice(price: number): void {
-    this.log.info(this.getFoundPriceText(price));
+  protected handFoundPrice(price: number, good: Good): void {
+    this.log.info(good.getFoundPriceText(price));
   }
 
-  protected handleNotFoundPrice(): void {
-    this.log.warn(this.getNotFoundPriceText());
+  protected handleNotFoundPrice(good: Good): void {
+    this.log.warn(good.getNotFoundPriceText());
   }
 
-  protected handleRequestError(): void {
-    const err = new Error(`failed to make request: ${this.URL}`);
+  protected handleRequestError(good: Good): void {
+    const err = new Error(`failed to make request: ${good.URL}`);
     this.log.error(err.message);
     throw err;
-  }
-
-  private getDiscountText(price: number): string {
-    return `found ${prettyPercent(price, this.price)} discount for ${
-      this.name
-    }: ${this.URL}`;
-  }
-
-  private getFoundPriceText(price: number): string {
-    return `found price ${price} for ${this.name}`;
-  }
-
-  private getNotFoundPriceText(): string {
-    return `unable to find price data for ${this.name}: ${this.URL}`;
   }
 }
 

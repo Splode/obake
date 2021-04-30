@@ -1,27 +1,30 @@
 import puppeteer from "puppeteer";
-import IGood from "../config/IGood";
+import Good from "./Good";
 import Notifier from "../message/Notifier";
 import Merchant from "./Merchant";
 
 export default class BestBuy extends Merchant {
-  public constructor(good: IGood, notifier: Notifier) {
-    super(good, notifier);
+  public constructor(notifier: Notifier) {
+    super(notifier);
   }
 
   public get isHeadless(): boolean {
     return false;
   }
 
-  public async priceCheck(page: puppeteer.Page): Promise<void> {
+  public get name(): string {
+    return "bestbuy";
+  }
+
+  public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {
     await page
-      .goto(this.URL, { waitUntil: "networkidle2" })
+      .goto(good.URL, { waitUntil: "networkidle2" })
       .catch(() => this.handleRequestError);
 
-    const url = new URL(this.URL);
+    const url = new URL(good.URL);
     const sku = url.searchParams.get("skuId");
     if (!sku) {
-      // TODO: reject with error
-      return;
+      throw new Error(`unable to find product SKU from URL: ${good.URL}`);
     }
 
     const priceString = await page
@@ -30,17 +33,17 @@ export default class BestBuy extends Merchant {
         (el) => el.textContent
       )
       .catch(() => {
-        this.handleNotFoundPrice();
+        this.handleNotFoundPrice(good);
         return;
       });
 
     if (!priceString) return;
     const price = this.parsePrice(priceString);
 
-    this.handFoundPrice(price);
+    this.handFoundPrice(price, good);
 
-    if (price < this.price) {
-      this.handleDiscount(price);
+    if (price < good.price) {
+      this.handleDiscount(price, good);
     }
   }
 }
