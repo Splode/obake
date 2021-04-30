@@ -2,17 +2,18 @@ import chalk from "chalk";
 import puppeteer from "puppeteer";
 import Notifier from "src/message/Notifier";
 import Logger from "../Logger";
+import Store from "../Store";
 import { elide, parsePrice } from "../strings";
 import Good from "./Good";
 
 export default abstract class Merchant {
   protected goods: Good[] = [];
-  protected log: Logger;
+  protected log: Logger | null;
   protected notifier: Notifier;
 
   public constructor(notifier: Notifier) {
     this.notifier = notifier;
-    this.log = new Logger();
+    this.log = Store.get().logger;
   }
 
   public abstract get prettyName(): string;
@@ -40,14 +41,14 @@ export default abstract class Merchant {
     const check = async (good: Good) => {
       if (!good.disabled) {
         const page = await browser.newPage().catch((err) => {
-          this.log.error(err);
+          this.log?.error(err);
         });
         if (page) {
           await this.priceCheck(page, good).catch((err) => {
-            this.log.error(err);
+            this.log?.error(err);
           });
           await page.close().catch((err) => {
-            this.log.error(err);
+            this.log?.error(err);
           });
         }
       }
@@ -68,7 +69,7 @@ export default abstract class Merchant {
   }
 
   protected handleUnavailable(good: Good): void {
-    this.log.info(
+    this.log?.info(
       `${elide(good.name)} ${chalk.yellow("unavailable")} for purchase at ${
         this.prettyName
       }: ${good.URL}`
@@ -77,21 +78,21 @@ export default abstract class Merchant {
 
   protected handleDiscount(price: number, good: Good): void {
     const msg = good.getDiscountText(price);
-    this.log.info(chalk.green(msg));
+    this.log?.info(chalk.green(msg));
     this.notifier.send(msg);
   }
 
   protected handFoundPrice(price: number, good: Good): void {
-    this.log.info(good.getFoundPriceText(price));
+    this.log?.info(good.getFoundPriceText(price));
   }
 
   protected handleNotFoundPrice(good: Good): void {
-    this.log.warn(good.getNotFoundPriceText());
+    this.log?.warn(good.getNotFoundPriceText());
   }
 
   protected handleRequestError(good: Good): void {
     const err = new Error(`failed to make request: ${good.URL}`);
-    this.log.error(err.message);
+    this.log?.error(err.message);
     throw err;
   }
 

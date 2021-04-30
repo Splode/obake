@@ -1,6 +1,8 @@
 import chalk from "chalk";
+import { join } from "path";
 import winston, { createLogger, format, transports } from "winston";
 import { toSlashDate, toTime } from "./date";
+import { ensureDirExists, getUserData } from "./file";
 
 export default class Logger {
   public constructor() {
@@ -9,14 +11,6 @@ export default class Logger {
       transports: [
         new transports.Console({
           format: format.combine(formatConsole()),
-        }),
-        new transports.File({
-          filename: "obake.log",
-          format: format.combine(
-            format.timestamp(),
-            format.uncolorize(),
-            formatFile()
-          ),
         }),
       ],
     });
@@ -38,6 +32,26 @@ export default class Logger {
 
   public info(msg: string): void {
     this.logger.info(msg);
+  }
+
+  public async withFile(): Promise<Logger> {
+    const userDir = getUserData();
+    const dataDir = join(userDir || "", "obake");
+    await ensureDirExists(dataDir).catch((err) => {
+      throw err;
+    });
+
+    this.logger.add(
+      new transports.File({
+        filename: join(dataDir, "obake.log"),
+        format: format.combine(
+          format.timestamp(),
+          format.uncolorize(),
+          formatFile()
+        ),
+      })
+    );
+    return this;
   }
 }
 

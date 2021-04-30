@@ -16,6 +16,10 @@ export function getUserData(): string | undefined {
   return process.env.HOME;
 }
 
-// function ensureDirExists(filepath: string): void {
-//  return
-// }
+export async function ensureDirExists(filepath: string): Promise<void> {
+  await fs.access(filepath).catch(async () => {
+    await fs.mkdir(filepath).catch((err) => {
+      throw err;
+    });
+  });
+}
