@@ -1,3 +1,5 @@
+![Obake header image](.github/obake_header_04--960x540.png)
+
 # Obake
 
 Check merchants for deals.
