@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import IDisableable from "../config/IDisableable";
 import { prettyPercent } from "../strings";
 import Merchant from "./Merchant";
@@ -29,7 +30,8 @@ export default class Good implements IGood {
   }
 
   public getFoundPriceText(price: number): string {
-    return `found price ${price} for ${this.name} at ${this.merchant?.prettyName}`;
+    const ps = chalk.cyan(`${price.toFixed(2)}`);
+    return `found price ${ps} for ${this.name} at ${this.merchant?.prettyName}`;
   }
 
   public getNotFoundPriceText(): string {

@@ -12,7 +12,11 @@ export default class Logger {
         }),
         new transports.File({
           filename: "obake.log",
-          format: format.combine(format.timestamp(), formatFile()),
+          format: format.combine(
+            format.timestamp(),
+            format.uncolorize(),
+            formatFile()
+          ),
         }),
       ],
     });

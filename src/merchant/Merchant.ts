@@ -1,5 +1,6 @@
+import chalk from "chalk";
 import puppeteer from "puppeteer";
-import { parsePrice } from "../strings";
+import { elide, parsePrice } from "../strings";
 import Good from "./Good";
 import Logger from "../Logger";
 import Notifier from "src/message/Notifier";
@@ -31,7 +32,7 @@ export default abstract class Merchant {
     if (!this.hasActiveGood()) return;
 
     const browser = await puppeteer
-      .launch({ headless: this.isHeadless })
+      .launch({ args: ["--disable-gpu"], headless: this.isHeadless })
       .catch((err) => {
         throw err;
       });
@@ -66,9 +67,17 @@ export default abstract class Merchant {
     return parsePrice(ps);
   }
 
+  protected handleUnavailable(good: Good): void {
+    this.log.info(
+      `${elide(good.name)} ${chalk.yellow("unavailable")} for purchase at ${
+        this.prettyName
+      }: ${good.URL}`
+    );
+  }
+
   protected handleDiscount(price: number, good: Good): void {
     const msg = good.getDiscountText(price);
-    this.log.info(msg);
+    this.log.info(chalk.green(msg));
     this.notifier.send(msg);
   }
 
@@ -90,7 +99,3 @@ export default abstract class Merchant {
     return this.goods.some((good) => !good.disabled);
   }
 }
-
-// interface IChecker {
-//   priceCheck(page: puppeteer.Page, good: IGood): Promise<void>;
-// }

@@ -37,6 +37,19 @@ export default class BestBuy extends Merchant {
         return;
       });
 
+    const cartText = await page
+      .$eval(".add-to-cart-button", (el) => el.textContent)
+      .catch(() => {
+        return;
+      });
+
+    await Promise.all([priceString, cartText]);
+
+    if (this.isUnvailable(String(cartText))) {
+      this.handleUnavailable(good);
+      return
+    }
+
     if (!priceString) return;
     const price = this.parsePrice(priceString);
 
@@ -45,5 +58,9 @@ export default class BestBuy extends Merchant {
     if (price < good.price) {
       this.handleDiscount(price, good);
     }
+  }
+
+  private isUnvailable(str: string): boolean {
+    return str.toLowerCase().includes("sold");
   }
 }
