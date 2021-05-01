@@ -49,6 +49,7 @@ export default class Logger {
           format.uncolorize(),
           formatFile()
         ),
+        maxsize: 16e6, // 16 MB 
       })
     );
     return this;
