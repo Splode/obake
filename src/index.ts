@@ -31,7 +31,15 @@ async function main() {
   EventEmitter.defaultMaxListeners = goods.length;
 
   const merchants = MerchantFactory.create(goods);
-  merchants.forEach(async (merchant) => {
-    await merchant.checkGoods();
-  });
+  await Promise.all(merchants.map((merchant) => merchant.checkGoods())).catch(
+    (err) => {
+      log.error(err);
+    }
+  );
+
+  if (cfg.verbose) {
+    log.info("finished checking, exiting...");
+  }
+
+  process.exit(0);
 }
