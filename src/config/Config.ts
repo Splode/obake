@@ -5,7 +5,7 @@ import Good, { IGood } from "../merchant/Good";
 import IDisableable from "./IDisableable";
 
 export class Config implements IConfig {
-  public static async getConfig(args: IArguments): Promise<Config> {
+  public static async get(args: IArguments): Promise<Config> {
     if (!Config.instance) {
       const cfg = await parseConfig(args.config).catch((err) => {
         throw err;
