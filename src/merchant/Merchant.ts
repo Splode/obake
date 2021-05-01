@@ -10,11 +10,12 @@ export default abstract class Merchant {
   protected goods: Good[] = [];
   protected log: Logger | null;
   protected notifier: Notifier | null;
+  protected store: Store;
 
   public constructor() {
-    const s = Store.get();
-    this.notifier = s.notifier;
-    this.log = s.logger;
+    this.store = Store.get();
+    this.notifier = this.store.notifier;
+    this.log = this.store.logger;
   }
 
   public abstract get prettyName(): string;
@@ -33,6 +34,8 @@ export default abstract class Merchant {
     if (this.goods.length <= 0) return;
     if (!this.hasActiveGood()) return;
 
+    const verbose = this.store.config?.verbose;
+
     const browser = await puppeteer
       .launch({ args: ["--disable-gpu"], headless: this.isHeadless })
       .catch((err) => {
@@ -45,12 +48,20 @@ export default abstract class Merchant {
           this.log?.error(err);
         });
         if (page) {
+          if (verbose) {
+            this.log?.info(`checking ${good.name} at ${good.URL}...`);
+          }
+
           await this.priceCheck(page, good).catch((err) => {
             this.log?.error(err);
           });
           await page.close().catch((err) => {
             this.log?.error(err);
           });
+        }
+      } else {
+        if (verbose) {
+          this.log?.info(`skipping due to disabled configuration: ${good.URL}`);
         }
       }
     };

@@ -13,7 +13,7 @@ import Store from "./Store";
 async function main() {
   const args = parseFlags(process.argv);
   const log = await new Logger().withFile();
-  const cfg = await Config.getConfig(args.config).catch((err) => {
+  const cfg = await Config.getConfig(args).catch((err) => {
     log.crit(`failed to load config: ${err}`);
     process.exit(1);
   });
