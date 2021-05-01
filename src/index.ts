@@ -23,9 +23,11 @@ async function main() {
   store.logger = log;
   store.notifier = notifier;
 
-  log.info("starting obake...");
+  const { goods, verbose } = cfg;
 
-  const { goods } = cfg;
+  if (verbose) {
+    log.info("starting obake...");
+  }
 
   // needed for disabling node warnings due to async browser launching
   EventEmitter.defaultMaxListeners = goods.length;
@@ -37,7 +39,7 @@ async function main() {
     }
   );
 
-  if (cfg.verbose) {
+  if (verbose) {
     log.info("obake finished checking, exiting...");
   }
 

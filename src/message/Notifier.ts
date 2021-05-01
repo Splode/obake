@@ -26,14 +26,23 @@ export default class Notifier {
   }
 
   public send(msg: string): void {
+    const { verbose } = this.config;
+
     this.messengers.forEach(async (m) => {
       if (!m.disabled) {
-        this.log?.info(`sending message via ${m.name} client: ${msg}`);
+        if (verbose) {
+          this.log?.info(`sending message via ${m.name} client: ${msg}`);
+        }
+
         await m.sendMessage(msg).catch((err: Error) => {
           this.log?.error(
             `failed to send message via ${m.name} client: ${err.message}`
           );
         });
+      } else {
+        if (verbose) {
+          this.log?.info(`skipping due to disabled: notify via ${m.name}`);
+        }
       }
     });
   }
