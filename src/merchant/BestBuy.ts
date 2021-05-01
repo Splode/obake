@@ -1,11 +1,10 @@
 import puppeteer from "puppeteer";
-import Notifier from "../message/Notifier";
 import Good from "./Good";
 import Merchant from "./Merchant";
 
 export default class BestBuy extends Merchant {
-  public constructor(notifier: Notifier) {
-    super(notifier);
+  public constructor() {
+    super();
   }
 
   public get isHeadless(): boolean {

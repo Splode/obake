@@ -25,10 +25,12 @@ async function main() {
 
   log.info("starting obake...");
 
-  // needed for disabling node warnings due to async browser launching
-  EventEmitter.defaultMaxListeners = cfg.goods.length;
+  const { goods } = cfg;
 
-  const merchants = MerchantFactory.create(cfg.goods, notifier);
+  // needed for disabling node warnings due to async browser launching
+  EventEmitter.defaultMaxListeners = goods.length;
+
+  const merchants = MerchantFactory.create(goods);
   merchants.forEach(async (merchant) => {
     await merchant.checkGoods();
   });

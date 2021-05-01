@@ -9,11 +9,12 @@ import Good from "./Good";
 export default abstract class Merchant {
   protected goods: Good[] = [];
   protected log: Logger | null;
-  protected notifier: Notifier;
+  protected notifier: Notifier | null;
 
-  public constructor(notifier: Notifier) {
-    this.notifier = notifier;
-    this.log = Store.get().logger;
+  public constructor() {
+    const s = Store.get();
+    this.notifier = s.notifier;
+    this.log = s.logger;
   }
 
   public abstract get prettyName(): string;
@@ -79,7 +80,7 @@ export default abstract class Merchant {
   protected handleDiscount(price: number, good: Good): void {
     const msg = good.getDiscountText(price);
     this.log?.info(chalk.green(msg));
-    this.notifier.send(msg);
+    this.notifier?.send(msg);
   }
 
   protected handFoundPrice(price: number, good: Good): void {
