@@ -1,3 +1,4 @@
+import Store from "../Store";
 import getHost from "../url";
 import Amazon from "./Amazon";
 import AppStore from "./AppStore";
@@ -15,7 +16,17 @@ export default class MerchantFactory {
 
     goods.forEach((good) => {
       let m: Merchant | null = null;
-      switch (getHost(good.URL)) {
+      let host: string;
+      try {
+        host = getHost(good.URL);
+      } catch (error) {
+        Store.get().logger?.error(
+          `failed to get hostname from URL: ${good.URL}`
+        );
+        return;
+      }
+
+      switch (host) {
         case "apps.apple.com":
           m = MerchantFactory.findByName("appstore", mLs);
           if (!m) {

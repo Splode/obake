@@ -48,6 +48,8 @@ export default class Notifier {
   }
 
   private initMessagers() {
+    if (!this.config.notifications) return;
+
     const notes = this.config.notifications;
     Object.keys(notes).forEach((k) => {
       const cfg = notes[k];

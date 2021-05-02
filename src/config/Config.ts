@@ -10,21 +10,23 @@ export class Config implements IConfig {
       const cfg = await parseConfig(args.config).catch((err) => {
         throw err;
       });
-      Config.instance = new Config(cfg, args);
+      Config.instance = new Config(cfg);
     }
     return Config.instance;
   }
 
+  public disableLogFile: boolean;
+  public verbose: boolean;
   public notifications: INotifications<NotifierConfig>;
   public goods: Good[] = [];
-  public verbose: boolean;
 
-  private constructor(cfg: IRawConfig, args: IArguments) {
+  private constructor(cfg: IRawConfig) {
     this.notifications = cfg.notifications;
     cfg.goods.forEach((g) => {
       this.goods.push(new Good(g));
     });
-    this.verbose = args.verbose;
+    this.disableLogFile = Boolean(cfg.disableLogFile);
+    this.verbose = Boolean(cfg.verbose);
   }
 
   private static instance: Config;
@@ -68,6 +70,8 @@ export interface INotifications<NotifierConfig> {
 }
 
 interface IRawConfig {
+  disableLogFile?: boolean;
+  verbose?: boolean;
   notifications: INotifications<NotifierConfig>;
   goods: IGood[];
 }

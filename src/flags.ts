@@ -9,11 +9,6 @@ export default function parseFlags(args: string[]): IArguments {
       default: "config.toml",
       describe: "Path to config file",
     },
-    verbose: {
-      type: "boolean",
-      default: false,
-      describe: "Log verbose output",
-    },
   }).argv;
   return argv;
 }
@@ -21,5 +16,4 @@ export default function parseFlags(args: string[]): IArguments {
 export interface IArguments {
   [x: string]: unknown;
   config: string;
-  verbose: boolean;
 }
