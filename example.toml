@@ -1,0 +1,28 @@
+# General Options ---------------------------------------------------------------------------------------------
+# disableLogFile = false     #  Set to true to disable logging to a system log file.
+# verbose = false            #  Set to true to log verbose output.
+verbose = true
+
+# Notifications Options ---------------------------------------------------------------------------------------
+# [notifications]
+
+# [notifications.desktop]
+# sound = true               #  Set to true to enable sound during desktop notifications.
+# disabled = false           #  Set to true to disable desktop notifications.
+
+# [notifications.telegram]
+# URL = ""                   # Telegram REST API endpoint for messaging.
+# chat_id = ""               # Telegram chat ID.
+# disabled = false           # Set to true to disable Telegram notifications.
+
+# Wishlist Goods ----------------------------------------------------------------------------------------------
+# [[goods]]                  # A Good represents a merchant's product.
+# URL = ""                   # The URL for a particular good.
+# name = ""                  # The name of a good (for display purposes only).
+# price = 0.00               # The strike price of a good, IE any price below this price will trigger an alert.
+# disabled = false           # Set to true to disable checking for this good.
+
+[[goods]]
+URL = "https://apps.apple.com/us/app/things-3-for-ipad/id904244226"
+name = "Things 3 for iPad"
+price = 19.99
