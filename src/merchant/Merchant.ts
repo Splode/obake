@@ -49,7 +49,7 @@ export default abstract class Merchant {
         });
         if (page) {
           if (verbose) {
-            this.log?.info(`checking ${good.name} at ${good.URL}...`);
+            this.log?.info(`checking for ${good.name} at ${good.URL}...`);
           }
 
           await this.priceCheck(page, good).catch((err) => {

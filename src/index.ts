@@ -1,4 +1,5 @@
 import EventEmitter from "events";
+import banner from "./banner";
 import { Config } from "./config/Config";
 import parseFlags from "./flags";
 import Logger from "./Logger";
@@ -32,15 +33,19 @@ async function main() {
   const { goods, verbose } = cfg;
 
   if (verbose) {
+    console.log(banner);
     log.info("starting obake...");
   }
 
-  // needed for disabling node warnings due to async browser launching
-  if (goods.length > EventEmitter.defaultMaxListeners) {
-    EventEmitter.defaultMaxListeners = goods.length;
-  }
-
   const merchants = MerchantFactory.create(goods);
+  const gl = goods.length;
+  // needed for disabling node warnings due to async browser launching
+  if (gl > EventEmitter.defaultMaxListeners) {
+    EventEmitter.defaultMaxListeners = gl;
+  }
+  if (verbose) {
+    log.info(`checking for ${gl} good${gl > 1 ? "s" : ""}...`);
+  }
   await Promise.all(merchants.map((merchant) => merchant.checkGoods())).catch(
     (err) => {
       log.error(err);
@@ -48,7 +53,7 @@ async function main() {
   );
 
   if (verbose) {
-    log.info("obake finished checking, exiting...");
+    log.info("finished checking, exiting...");
   }
 
   process.exit(0);
