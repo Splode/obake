@@ -1,14 +1,19 @@
 import chalk from "chalk";
 
-const bannerText = `
+const top = `
     ...     :::::::.    :::.      :::  .   .,::::::  
- .;;;;;;;.   ;;;'';;'   ;;\`;;     ;;; .;;,.;;;;''''  
-,[[     \\[[, [[[__[[\\. ,[[ '[[,   [[[[[/'   [[cccc   
+ .;;;;;;;.   ;;;'';;'   ;;\`;;     ;;; .;;,.;;;;''''   
+`;
+
+const middle = `,[[     \\[[, [[[__[[\\. ,[[ '[[,   [[[[[/'   [[cccc   
 $$$,     $$$ $$""""Y$$c$$$cc$$$c _$$$$,     $$""""   
-"888,_ _,88P_88o,,od8P 888   888,"888"88o,  888oo,__ 
+`;
+
+const bottom = `"888,_ _,88P_88o,,od8P 888   888,"888"88o,  888oo,__
   "YMMMMMP" ""YUMMMP"  YMM   ""\`  MMM "MMP" """"YUMMM
 `;
 
-const banner = chalk.blue(bannerText);
+const banner =
+  chalk.blue(top) + chalk.blueBright(middle) + chalk.cyanBright(bottom);
 
 export default banner;
