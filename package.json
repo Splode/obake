@@ -8,7 +8,8 @@
     "start": "ts-node ./src/index.ts",
     "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{json,js,ts}\"",
     "lint": "tsc --noEmit && eslint \"./**/*.{js,ts}\"",
-    "lint:fix": "tsc --noEmit && eslint \"./**/*.{js,ts}\" --fix"
+    "lint:fix": "tsc --noEmit && eslint \"./**/*.{js,ts}\" --fix",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Christopher Murphy",
@@ -26,12 +27,15 @@
     "yargs": "^17.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.23",
     "@types/node-notifier": "^8.0.0",
     "@types/yargs": "^16.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0"
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.5"
   }
 }
