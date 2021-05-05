@@ -1,5 +1,7 @@
 import chalk from "chalk";
-import puppeteer from "puppeteer";
+import { Page } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import Notifier from "src/message/Notifier";
 import Logger from "../Logger";
 import Store from "../Store";
@@ -20,7 +22,7 @@ export default abstract class Merchant {
 
   public abstract get prettyName(): string;
 
-  public abstract priceCheck(page: puppeteer.Page, good: Good): Promise<void>;
+  public abstract priceCheck(page: Page, good: Good): Promise<void>;
 
   public get isHeadless(): boolean {
     return true;
@@ -37,7 +39,8 @@ export default abstract class Merchant {
     const verbose = this.store.config?.verbose;
 
     const browser = await puppeteer
-      .launch({ args: ["--disable-gpu"], headless: this.isHeadless })
+      .use(StealthPlugin())
+      .launch()
       .catch((err) => {
         throw err;
       });

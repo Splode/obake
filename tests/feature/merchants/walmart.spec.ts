@@ -1,12 +1,14 @@
-import puppeteer from "puppeteer";
+import { Browser } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
 describe("The Walmart merchant checker", () => {
   jest.setTimeout(3e5);
 
-  let browser: puppeteer.Browser;
+  let browser: Browser;
 
   beforeAll(async () => {
-    browser = await puppeteer.launch({ headless: false });
+    browser = await puppeteer.use(StealthPlugin()).launch();
   });
 
   afterAll(async () => {

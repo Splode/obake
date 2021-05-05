@@ -1,9 +1,9 @@
-import puppeteer from "puppeteer";
+import puppeteer, { Browser } from "puppeteer";
 
 describe("The Best Buy merchant checker", () => {
   jest.setTimeout(3e5);
 
-  let browser: puppeteer.Browser;
+  let browser: Browser;
 
   beforeAll(async () => {
     browser = await puppeteer.launch({ headless: false });

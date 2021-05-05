@@ -10,7 +10,7 @@ export function parsePrice(ps: string): number {
   return parseFloat(priceString);
 }
 
-export function prettyPercent(current: number, old: number): string {
-  const p = 100 - (current / old) * 100;
+export function prettyPercent(numerator: number, denominator: number): string {
+  const p = 100 - (numerator / denominator) * 100;
   return `${p.toFixed(2)}%`;
 }

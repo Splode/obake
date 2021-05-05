@@ -1,8 +1,9 @@
 import { Browser } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import { parsePrice } from "../../../src/strings";
 
-describe("The Apple App Store merchant checker", () => {
+describe("The B&H merchant checker", () => {
   jest.setTimeout(3e5);
 
   let browser: Browser;
@@ -17,15 +18,17 @@ describe("The Apple App Store merchant checker", () => {
 
   test("fetches the price for a given app URL", async () => {
     const page = await browser.newPage();
-    await page.goto("https://apps.apple.com/us/app/ia-writer/id775737172", {
-      waitUntil: "networkidle2",
-    });
+    await page.goto(
+      "https://www.bhphotovideo.com/c/product/1321309-REG/sigma_24_70mm_f_2_8_dg_os.html",
+      {
+        waitUntil: "networkidle2",
+      }
+    );
     const priceString = await page.$eval(
-      ".app-header__list__item--price",
-      (el) => el.textContent
+      "[data-selenium='pricingPrice']",
+      (el) => el.textContent || ""
     );
     expect(typeof priceString).toBe("string");
-    const price = parseFloat(priceString || "");
-    expect(typeof price).toBe("number");
+    expect(typeof parsePrice(priceString)).toBe("number");
   });
 });
