@@ -1,7 +1,5 @@
 import chalk from "chalk";
-import { Page } from "puppeteer";
-import puppeteer from "puppeteer-extra";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import puppeteer, { Page } from "puppeteer";
 import Notifier from "src/message/Notifier";
 import Logger from "../Logger";
 import Store from "../Store";
@@ -39,8 +37,7 @@ export default abstract class Merchant {
     const verbose = this.store.config?.verbose;
 
     const browser = await puppeteer
-      .use(StealthPlugin())
-      .launch()
+      .launch({ headless: this.isHeadless })
       .catch((err) => {
         throw err;
       });
