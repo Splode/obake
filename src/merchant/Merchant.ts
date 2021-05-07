@@ -108,7 +108,7 @@ export default abstract class Merchant {
     throw err;
   }
 
-  private hasActiveGood(): boolean {
+  protected hasActiveGood(): boolean {
     return this.goods.some((good) => !good.disabled);
   }
 }

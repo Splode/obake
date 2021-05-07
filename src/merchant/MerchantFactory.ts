@@ -2,6 +2,7 @@ import Store from "../Store";
 import getHost from "../url";
 import Amazon from "./Amazon";
 import AppStore from "./AppStore";
+import BandH from "./BandH";
 import BestBuy from "./BestBuy";
 import Costco from "./Costco";
 import Good from "./Good";
@@ -38,6 +39,13 @@ export default class MerchantFactory {
           m = MerchantFactory.findByName("amazon", mLs);
           if (!m) {
             m = new Amazon();
+            mLs.push(m);
+          }
+          break;
+        case "www.bhphotovideo.com":
+          m = MerchantFactory.findByName("bandhphotovideo", mLs);
+          if (!m) {
+            m = new BandH();
             mLs.push(m);
           }
           break;
