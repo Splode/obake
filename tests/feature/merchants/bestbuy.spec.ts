@@ -1,7 +1,7 @@
 import puppeteer, { Browser } from "puppeteer";
 
 describe("The Best Buy merchant checker", () => {
-  jest.setTimeout(3e5);
+  jest.setTimeout(3e4);
 
   let browser: Browser;
 

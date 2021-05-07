@@ -3,7 +3,7 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
 describe("The Newegg merchant checker", () => {
-  jest.setTimeout(3e5);
+  jest.setTimeout(3e4);
 
   let browser: Browser;
 
