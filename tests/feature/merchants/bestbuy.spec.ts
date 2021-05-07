@@ -1,4 +1,5 @@
 import puppeteer, { Browser } from "puppeteer";
+import { parsePrice } from "../../../src/strings";
 
 describe("The Best Buy merchant checker", () => {
   jest.setTimeout(3e4);
@@ -37,7 +38,6 @@ describe("The Best Buy merchant checker", () => {
     await Promise.all([priceString, cartText]);
 
     expect(typeof priceString).toBe("string");
-    const price = parseFloat(priceString || "");
-    expect(typeof price).toBe("number");
+    expect(typeof parsePrice(String(priceString))).toBe("number");
   });
 });

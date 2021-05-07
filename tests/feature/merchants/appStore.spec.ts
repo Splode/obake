@@ -1,6 +1,7 @@
 import { Browser } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import { parsePrice } from "../../../src/strings";
 
 describe("The Apple App Store merchant checker", () => {
   jest.setTimeout(3e4);
@@ -25,7 +26,6 @@ describe("The Apple App Store merchant checker", () => {
       (el) => el.textContent
     );
     expect(typeof priceString).toBe("string");
-    const price = parseFloat(priceString || "");
-    expect(typeof price).toBe("number");
+    expect(typeof parsePrice(String(priceString))).toBe("number");
   });
 });

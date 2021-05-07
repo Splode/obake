@@ -26,9 +26,9 @@ describe("The B&H merchant checker", () => {
     );
     const priceString = await page.$eval(
       "[data-selenium='pricingPrice']",
-      (el) => el.textContent || ""
+      (el) => el.textContent
     );
     expect(typeof priceString).toBe("string");
-    expect(typeof parsePrice(priceString)).toBe("number");
+    expect(typeof parsePrice(String(priceString))).toBe("number");
   });
 });
