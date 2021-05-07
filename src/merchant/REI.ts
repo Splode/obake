@@ -12,7 +12,9 @@ export default class REI extends Merchant {
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {
-    await page.goto(good.URL).catch(() => this.handleRequestError);
+    await page.goto(good.URL).catch((err) => {
+      throw err;
+    });
 
     const priceString = await page
       .$eval(".product-current-price > span", (el) => el.textContent)

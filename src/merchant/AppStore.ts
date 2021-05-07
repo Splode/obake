@@ -12,9 +12,9 @@ export default class AppStore extends Merchant {
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {
-    await page
-      .goto(good.URL, { waitUntil: "networkidle2" })
-      .catch(() => this.handleRequestError);
+    await page.goto(good.URL, { waitUntil: "networkidle2" }).catch((err) => {
+      throw err;
+    });
 
     const priceString = await page
       .$eval(".app-header__list__item--price", (el) => el.textContent)

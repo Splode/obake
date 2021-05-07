@@ -45,19 +45,23 @@ export default abstract class Merchant {
     const check = async (good: Good) => {
       if (!good.disabled) {
         const page = await browser.newPage().catch((err) => {
-          this.log?.error(err);
+          throw err;
         });
         if (page) {
           if (verbose) {
             this.log?.info(`checking for ${good.name} at ${good.URL}...`);
           }
 
-          await this.priceCheck(page, good).catch((err) => {
-            this.log?.error(err);
-          });
-          await page.close().catch((err) => {
-            this.log?.error(err);
-          });
+          await this.priceCheck(page, good)
+            .catch((err) => {
+              this.log?.error(err.message);
+            })
+            .finally(async () => {
+              await page.close().catch((err) => {
+                this.log?.error(err.message);
+                throw err;
+              });
+            });
         }
       } else {
         if (verbose) {
@@ -65,11 +69,15 @@ export default abstract class Merchant {
         }
       }
     };
-    await Promise.all(this.goods.map(check));
-
-    await browser.close().catch((err) => {
-      throw err;
-    });
+    await Promise.all(this.goods.map(check))
+      .catch((err) => {
+        this.log?.error(err.message);
+      })
+      .finally(async () => {
+        await browser.close().catch((err) => {
+          throw err;
+        });
+      });
   }
 
   public addGoods(...goods: Good[]): void {
@@ -102,9 +110,12 @@ export default abstract class Merchant {
     this.log?.warn(good.getNotFoundPriceText());
   }
 
-  protected handleRequestError(good: Good): void {
-    const err = new Error(`failed to make request: ${good.URL}`);
-    this.log?.error(err.message);
+  protected requestError(res: puppeteer.HTTPResponse, good: Good): Error {
+    return new Error(
+      `request failed with status code ${chalk.yellow(res.status())}: ${
+        good.URL
+      }`
+    );
   }
 
   protected hasActiveGood(): boolean {

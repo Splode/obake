@@ -32,7 +32,6 @@ export default class BandH extends Merchant {
     const check = async (good: Good) => {
       if (!good.disabled) {
         const page = await browser.newPage().catch((err) => {
-          this.log?.error(err);
           throw err;
         });
         if (page) {
@@ -73,11 +72,7 @@ export default class BandH extends Merchant {
       .goto(good.URL, { waitUntil: "networkidle2" })
       .then((res) => {
         if (res.status() > 400) {
-          throw new Error(
-            `failed request to URL: ${
-              good.URL
-            } with status code: ${res.status()}`
-          );
+          throw this.requestError(res, good);
         }
       })
       .catch((err) => {
