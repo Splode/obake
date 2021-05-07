@@ -105,7 +105,6 @@ export default abstract class Merchant {
   protected handleRequestError(good: Good): void {
     const err = new Error(`failed to make request: ${good.URL}`);
     this.log?.error(err.message);
-    throw err;
   }
 
   protected hasActiveGood(): boolean {

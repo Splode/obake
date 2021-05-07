@@ -15,12 +15,12 @@ async function main() {
   const args = parseFlags(process.argv);
   const log = new Logger();
   const cfg = await Config.get(args).catch((err) => {
-    log.crit(`failed to load config: ${err}`);
+    log.crit(`failed to load config: ${err.message}`);
     process.exit(1);
   });
   if (!cfg.disableLogFile) {
     await log.withFile().catch((err) => {
-      log.error(err);
+      log.error(err.message);
     });
   }
   const notifier = new Notifier(cfg);
@@ -48,7 +48,7 @@ async function main() {
   }
   await Promise.all(merchants.map((merchant) => merchant.checkGoods())).catch(
     (err) => {
-      log.error(err);
+      log.error(err.message);
     }
   );
 

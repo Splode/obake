@@ -43,7 +43,7 @@ export default class MerchantFactory {
           }
           break;
         case "www.bhphotovideo.com":
-          m = MerchantFactory.findByName("bandhphotovideo", mLs);
+          m = MerchantFactory.findByName("b&h", mLs);
           if (!m) {
             m = new BandH();
             mLs.push(m);

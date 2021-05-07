@@ -10,7 +10,7 @@ export default class BandH extends Merchant {
   }
 
   public get prettyName(): string {
-    return "B and H Photo Video";
+    return "B&H";
   }
 
   public async checkGoods(): Promise<void> {
@@ -21,7 +21,10 @@ export default class BandH extends Merchant {
 
     const browser = await puppeteer
       .use(StealthPlugin())
-      .launch()
+      // HACK: required due to an issue with puppeteer types support in puppeteer-extra
+      // see https://github.com/berstend/puppeteer-extra/issues/428#issuecomment-778679665 for details
+      // @ts-ignore
+      .launch({ headless: false })
       .catch((err) => {
         throw err;
       });
@@ -30,18 +33,22 @@ export default class BandH extends Merchant {
       if (!good.disabled) {
         const page = await browser.newPage().catch((err) => {
           this.log?.error(err);
+          throw err;
         });
         if (page) {
           if (verbose) {
             this.log?.info(`checking for ${good.name} at ${good.URL}...`);
           }
-
-          await this.priceCheck(page, good).catch((err) => {
-            this.log?.error(err);
-          });
-          await page.close().catch((err) => {
-            this.log?.error(err);
-          });
+          await this.priceCheck(page, good)
+            .catch((err) => {
+              this.log?.error(err.message);
+            })
+            .finally(async () => {
+              await page.close().catch((err) => {
+                this.log?.error(err.message);
+                throw err;
+              });
+            });
         }
       } else {
         if (verbose) {
@@ -49,23 +56,39 @@ export default class BandH extends Merchant {
         }
       }
     };
-    await Promise.all(this.goods.map(check));
 
-    await browser.close().catch((err) => {
-      throw err;
-    });
+    await Promise.all(this.goods.map(check))
+      .catch((err) => {
+        this.log?.error(err.message);
+      })
+      .finally(async () => {
+        await browser.close().catch((err) => {
+          throw err;
+        });
+      });
   }
 
   public async priceCheck(page: Page, good: Good): Promise<void> {
     await page
       .goto(good.URL, { waitUntil: "networkidle2" })
-      .catch(() => this.handleRequestError);
+      .then((res) => {
+        if (res.status() > 400) {
+          throw new Error(
+            `failed request to URL: ${
+              good.URL
+            } with status code: ${res.status()}`
+          );
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
 
     const priceString = await page
       .$eval("[data-selenium='pricingPrice']", (el) => el.textContent)
-      .catch(() => {
+      .catch((err) => {
         this.handleNotFoundPrice(good);
-        return;
+        throw err;
       });
 
     if (!priceString) return;
