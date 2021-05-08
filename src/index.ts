@@ -23,12 +23,11 @@ async function main() {
       log.error(err.message);
     });
   }
-  const notifier = new Notifier(cfg);
 
   const store = Store.get();
   store.config = cfg;
   store.logger = log;
-  store.notifier = notifier;
+  store.notifier = new Notifier(cfg);
 
   const { goods, verbose } = cfg;
 

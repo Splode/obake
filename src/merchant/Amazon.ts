@@ -33,7 +33,7 @@ export default class Amazon extends Merchant {
     this.handFoundPrice(price, good);
 
     if (price < good.price) {
-      this.handleDiscount(price, good);
+      await this.handleDiscount(price, good);
     }
   }
 }

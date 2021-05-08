@@ -92,7 +92,7 @@ export default class BandH extends Merchant {
     this.handFoundPrice(price, good);
 
     if (price < good.price) {
-      this.handleDiscount(price, good);
+      await this.handleDiscount(price, good);
     }
   }
 }

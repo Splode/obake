@@ -96,10 +96,10 @@ export default abstract class Merchant {
     );
   }
 
-  protected handleDiscount(price: number, good: Good): void {
+  protected async handleDiscount(price: number, good: Good): Promise<void> {
     const msg = good.getDiscountText(price);
     this.log?.info(chalk.green(msg));
-    this.notifier?.send(msg);
+    await this.notifier?.send(msg);
   }
 
   protected handFoundPrice(price: number, good: Good): void {

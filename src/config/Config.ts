@@ -58,12 +58,21 @@ export interface IDesktop extends IDisableable {
   sound?: boolean;
 }
 
+export interface IEmail extends IDisableable {
+  username: string;
+  password: string;
+  host: string;
+  port: number;
+  from?: string;
+  to?: string;
+}
+
 export interface ITelegram extends IDisableable {
   URL: string;
   chat_id: string;
 }
 
-export type NotifierConfig = IDesktop | ITelegram;
+export type NotifierConfig = IDesktop | IEmail | ITelegram;
 
 export interface INotifications<NotifierConfig> {
   [Key: string]: NotifierConfig;

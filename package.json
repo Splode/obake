@@ -18,6 +18,7 @@
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
     "node-notifier": "^9.0.1",
+    "nodemailer": "^6.6.0",
     "prettier": "^2.2.1",
     "puppeteer": "^9.0.0",
     "toml": "^3.0.0",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/node-notifier": "^8.0.0",
+    "@types/nodemailer": "^6.4.1",
     "@types/yargs": "^16.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",

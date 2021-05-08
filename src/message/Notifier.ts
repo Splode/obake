@@ -1,7 +1,8 @@
-import { Config, IDesktop, ITelegram } from "../config/Config";
+import { Config, IDesktop, IEmail, ITelegram } from "../config/Config";
 import Logger from "../Logger";
 import Store from "../Store";
 import DesktopClient from "./Desktop";
+import EmailClient from "./Email";
 import TelegramClient from "./Telegram";
 
 export interface IMessager {
@@ -25,15 +26,14 @@ export default class Notifier {
     this.messengers.push(m);
   }
 
-  public send(msg: string): void {
+  public async send(msg: string): Promise<void> {
     const { verbose } = this.config;
 
-    this.messengers.forEach(async (m) => {
+    const s = async (m: IMessager) => {
       if (!m.disabled) {
         if (verbose) {
           this.log?.info(`sending message via ${m.name} client: ${msg}`);
         }
-
         await m.sendMessage(msg).catch((err: Error) => {
           this.log?.error(
             `failed to send message via ${m.name} client: ${err.message}`
@@ -41,10 +41,14 @@ export default class Notifier {
         });
       } else {
         if (verbose) {
-          this.log?.info(`skipping due to disabled: notify via ${m.name}`);
+          this.log?.info(
+            `skipping nofitification due to disabled: notify via ${m.name}`
+          );
         }
       }
-    });
+    };
+
+    await Promise.all(this.messengers.map(s));
   }
 
   private initMessagers() {
@@ -56,7 +60,10 @@ export default class Notifier {
       switch (k) {
         case "desktop":
           this.add(new DesktopClient(cfg as IDesktop));
-          return;
+          break;
+        case "email":
+          this.add(new EmailClient(cfg as IEmail));
+          break;
         case "telegram":
           this.add(new TelegramClient(cfg as ITelegram));
           break;

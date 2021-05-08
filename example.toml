@@ -6,11 +6,20 @@ verbose = true
 # Notifications Options ---------------------------------------------------------------------------------------
 # [notifications]
 
-# [notifications.desktop]
+# [notifications.desktop]    #  Notifications via Native Desktop Notification API
 # sound = true               #  Set to true to enable sound during desktop notifications.
 # disabled = false           #  Set to true to disable desktop notifications.
 
-# [notifications.telegram]
+# [notifications.email]      #  Notifications via SMTP Email
+# username = ""              #  SMTP auth username
+# password = ""              #  SMTP auth password
+# host = ""                  #  SMTP server host
+# port = 0                   #  SMTP server port, probably 587 or 465 for insecure or secure, respectively
+# from = ""                  #  Optional "from" address, defaults to username
+# to = ""                    #  Optional "to" address, defaults to username
+# disabled = false           #  Set to true to disable email notifications
+
+# [notifications.telegram]   #  Notifications vai Telegram API
 # URL = ""                   # Telegram REST API endpoint for messaging.
 # chat_id = ""               # Telegram chat ID.
 # disabled = false           # Set to true to disable Telegram notifications.
