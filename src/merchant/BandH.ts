@@ -72,12 +72,10 @@ export default class BandH extends Merchant {
       .goto(good.URL, { waitUntil: "networkidle2" })
       .then((res) => {
         if (res.status() > 400) {
-          throw this.requestError(res, good);
+          throw this.responseError(res, good);
         }
       })
-      .catch((err) => {
-        throw err;
-      });
+      .catch((err) => this.requestError(err, good));
 
     const priceString = await page
       .$eval("[data-selenium='pricingPrice']", (el) => el.textContent)

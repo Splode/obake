@@ -110,12 +110,16 @@ export default abstract class Merchant {
     this.log?.warn(good.getNotFoundPriceText());
   }
 
-  protected requestError(res: puppeteer.HTTPResponse, good: Good): Error {
+  protected responseError(res: puppeteer.HTTPResponse, good: Good): Error {
     return new Error(
       `request failed with status code ${chalk.yellow(res.status())}: ${
         good.URL
       }`
     );
+  }
+
+  protected requestError(err: Error, good: Good): Error {
+    return new Error(`request to ${good.URL} failed: ${err.message}`);
   }
 
   protected hasActiveGood(): boolean {

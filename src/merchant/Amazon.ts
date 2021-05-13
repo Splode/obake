@@ -16,9 +16,9 @@ export default class Amazon extends Merchant {
   }
 
   public async priceCheck(page: puppeteer.Page, good: Good): Promise<void> {
-    await page.goto(good.URL, { waitUntil: "networkidle2" }).catch((err) => {
-      throw err;
-    });
+    await page
+      .goto(good.URL, { waitUntil: "networkidle2" })
+      .catch((err) => this.requestError(err, good));
 
     const priceString = await page
       .$eval("#priceblock_ourprice", (el) => el.textContent)
