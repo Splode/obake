@@ -16,6 +16,7 @@ export class Config implements IConfig {
   }
 
   public disableLogFile: boolean;
+  public interval: number;
   public verbose: boolean;
   public notifications: INotifications<NotifierConfig>;
   public goods: Good[] = [];
@@ -26,6 +27,7 @@ export class Config implements IConfig {
       this.goods.push(new Good(g));
     });
     this.disableLogFile = Boolean(cfg.disableLogFile);
+    this.interval = cfg.interval || 0;
     this.verbose = Boolean(cfg.verbose);
   }
 
@@ -80,6 +82,7 @@ export interface INotifications<NotifierConfig> {
 
 interface IRawConfig {
   disableLogFile?: boolean;
+  interval?: number;
   verbose?: boolean;
   notifications: INotifications<NotifierConfig>;
   goods: IGood[];

@@ -1,6 +1,7 @@
 import { Config } from "./config/Config";
 import Logger from "./Logger";
 import Notifier from "./message/Notifier";
+import State from "./State";
 
 export default class Store {
   private static instance: Store;
@@ -15,6 +16,7 @@ export default class Store {
   private _config: Config | null = null;
   private _logger: Logger | null = null;
   private _notifier: Notifier | null = null;
+  private _state: State | null = null;
 
   private constructor() {
     return;
@@ -42,5 +44,13 @@ export default class Store {
 
   public set notifier(notifier: Notifier | null) {
     this._notifier = notifier;
+  }
+
+  public get state(): State | null {
+    return this._state;
+  }
+
+  public set state(state: State | null) {
+    this._state = state;
   }
 }
