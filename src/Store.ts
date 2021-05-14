@@ -1,4 +1,5 @@
 import { Config } from "./config/Config";
+import parseFlags from "./flags";
 import Logger from "./Logger";
 import Notifier from "./message/Notifier";
 import State from "./State";
@@ -52,5 +53,20 @@ export default class Store {
 
   public set state(state: State | null) {
     this._state = state;
+  }
+
+  public async init(): Promise<void> {
+    const args = parseFlags(process.argv);
+    this._logger = new Logger();
+    this._config = await Config.get(args).catch((err) => {
+      throw new Error(`failed to load config: ${err.message}`);
+    });
+    if (!this._config.disableLogFile) {
+      await this._logger.withFile().catch((err) => {
+        throw err;
+      });
+    }
+    this._notifier = new Notifier(this._config);
+    this.state = new State();
   }
 }

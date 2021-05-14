@@ -1,6 +1,8 @@
 # General Options ---------------------------------------------------------------------------------------------
 # disableLogFile = false     #  Set to true to disable logging to a system log file.
+# interval = 0               #  Set an interval (minutes) to have Obake continuously check for goods.
 # verbose = false            #  Set to true to log verbose output.
+interval = 1
 verbose = true
 
 # Notifications Options ---------------------------------------------------------------------------------------
