@@ -20,6 +20,17 @@ async function main() {
     process.exit(1);
   });
 
+  process.once("SIGINT", async () => {
+    await obake
+      .teardown()
+      .catch((err) => {
+        log.error(err.message);
+      })
+      .finally(() => {
+        process.exit(0);
+      });
+  });
+
   await obake.run().catch((err) => {
     log.error(err.message);
   });

@@ -19,7 +19,7 @@ export default class BandH extends Merchant {
 
     const verbose = this.store.config?.verbose;
 
-    const browser = await puppeteer
+    this.browser = await puppeteer
       .use(StealthPlugin())
       // HACK: required due to an issue with puppeteer types support in puppeteer-extra
       // see https://github.com/berstend/puppeteer-extra/issues/428#issuecomment-778679665 for details
@@ -31,7 +31,7 @@ export default class BandH extends Merchant {
 
     const check = async (good: Good) => {
       if (!good.disabled) {
-        const page = await browser.newPage().catch((err) => {
+        const page = await this.browser?.newPage().catch((err) => {
           throw err;
         });
         if (page) {
@@ -61,7 +61,7 @@ export default class BandH extends Merchant {
         this.log?.error(err.message);
       })
       .finally(async () => {
-        await browser.close().catch((err) => {
+        await this.browser?.close().catch((err) => {
           throw err;
         });
       });

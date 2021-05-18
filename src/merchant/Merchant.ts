@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import puppeteer, { Page } from "puppeteer";
+import puppeteer, { Browser, Page } from "puppeteer";
 import Notifier from "src/message/Notifier";
 import Logger from "../Logger";
 import Store from "../Store";
@@ -11,6 +11,7 @@ export default abstract class Merchant {
   protected log: Logger | null;
   protected notifier: Notifier | null;
   protected store: Store;
+  public browser: Browser | null = null;
 
   public constructor() {
     this.store = Store.get();
@@ -36,15 +37,17 @@ export default abstract class Merchant {
 
     const verbose = this.store.config?.verbose;
 
-    const browser = await puppeteer
+    this.browser = await puppeteer
       .launch({ headless: this.isHeadless })
       .catch((err) => {
         throw err;
       });
 
+    // this.store.addBrowserToPool(browser)
+
     const check = async (good: Good) => {
       if (!good.disabled) {
-        const page = await browser.newPage().catch((err) => {
+        const page = await this.browser?.newPage().catch((err) => {
           throw err;
         });
         if (page) {
@@ -74,7 +77,7 @@ export default abstract class Merchant {
         this.log?.error(err.message);
       })
       .finally(async () => {
-        await browser.close().catch((err) => {
+        await this.browser?.close().catch((err) => {
           throw err;
         });
       });
@@ -82,6 +85,14 @@ export default abstract class Merchant {
 
   public addGoods(...goods: Good[]): void {
     goods.forEach((g) => this.goods.push(g));
+  }
+
+  public async close(): Promise<void> {
+    if (this.browser && this.browser.isConnected) {
+      await this.browser.close().catch((err) => {
+        throw err;
+      });
+    }
   }
 
   protected parsePrice(ps: string): number {
