@@ -31,7 +31,7 @@
     "@types/jest": "^26.0.23",
     "@types/node-notifier": "^8.0.0",
     "@types/nodemailer": "^6.4.1",
-    "@types/yargs": "^16.0.1",
+    "@types/yargs": "^16.0.2",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "eslint": "^7.26.0",
