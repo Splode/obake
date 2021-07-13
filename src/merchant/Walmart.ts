@@ -27,6 +27,19 @@ export default class Walmart extends Merchant {
         return;
       });
 
+    const cartText = await page
+      .$eval(".prod-ProductCTA--primary", (el) => el.textContent)
+      .catch(() => {
+        return;
+      });
+
+    await Promise.all([priceString, cartText]);
+
+    if (this.isUnvailable(String(cartText))) {
+      this.handleUnavailable(good);
+      return;
+    }
+
     if (!priceString) return;
     const price = this.parsePrice(priceString);
 
@@ -35,5 +48,9 @@ export default class Walmart extends Merchant {
     if (price < good.price) {
       await this.handleDiscount(price, good);
     }
+  }
+
+  private isUnvailable(str: string): boolean {
+    return !str.toLowerCase().includes("add");
   }
 }
