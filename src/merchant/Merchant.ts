@@ -38,7 +38,10 @@ export default abstract class Merchant {
     const verbose = this.store.config?.verbose;
 
     this.browser = await puppeteer
-      .launch({ headless: this.isHeadless })
+      .launch({
+        args: [!this.isHeadless ? "--window-position=-3860,0" : ""],
+        headless: this.isHeadless,
+      })
       .catch((err) => {
         throw err;
       });
