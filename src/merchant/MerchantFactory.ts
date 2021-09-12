@@ -1,4 +1,5 @@
 import Store from "../Store";
+import JensonUSA from "./JensonUSA";
 import getHost from "../url";
 import Amazon from "./Amazon";
 import AppStore from "./AppStore";
@@ -60,6 +61,13 @@ export default class MerchantFactory {
           m = MerchantFactory.findByName("costco", mLs);
           if (!m) {
             m = new Costco();
+            mLs.push(m);
+          }
+          break;
+        case "www.jensonusa.com":
+          m = MerchantFactory.findByName("jensonusa", mLs);
+          if (!m) {
+            m = new JensonUSA();
             mLs.push(m);
           }
           break;
