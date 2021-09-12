@@ -8,15 +8,25 @@ import { hideBin } from "yargs/helpers";
  * @returns The parsed arguments object
  */
 export default function parseFlags(args: string[]): IArguments {
-  const argv = yargs(hideBin(args)).options({
-    config: {
-      type: "string",
-      alias: "c",
-      default: "config.toml",
-      describe: "Path to config file",
-    },
-  }).argv;
-  return argv;
+  return yargs(hideBin(args))
+    .options({
+      config: {
+        type: "string",
+        alias: "c",
+        default: "config.toml",
+        describe: "Path to config file",
+      },
+    })
+    .scriptName("obake")
+    .usage(
+      `Obake automates checking merchants for deals.
+
+      Usage:
+             $0 [options]`
+    )
+    .epilog(
+      "Author: Christopher Murphy <flyweight@pm.me>\nRepo: https://github.com/splode/obake"
+    ).argv;
 }
 
 /**

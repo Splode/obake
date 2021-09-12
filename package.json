@@ -1,10 +1,10 @@
 {
   "name": "obake",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Check merchants for deals.",
   "main": "src/index.ts",
   "bin": {
-    "obake": "bin/obake.js"
+    "obake": "bin/obake"
   },
   "scripts": {
     "build": "tsc",
@@ -12,7 +12,10 @@
     "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{json,js,ts}\"",
     "lint": "tsc --noEmit && eslint \"./**/*.{js,ts}\"",
     "lint:fix": "tsc --noEmit && eslint \"./**/*.{js,ts}\" --fix",
-    "test": "jest"
+    "test": "jest",
+    "prepare" : "npm run build",
+    "preinstall": "npm run build",
+    "preversion": "npm run format && npm run lint"
   },
   "keywords": [],
   "author": "Christopher Murphy",
