@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Check merchants for deals.",
   "main": "src/index.ts",
+  "bin": {
+    "obake": "bin/obake.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "ts-node ./src/index.ts",
