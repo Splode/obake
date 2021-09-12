@@ -25,7 +25,7 @@ describe("The REI merchant checker", () => {
       }
     );
     const priceString = await page.$eval(
-      ".product-current-price > span",
+      "#buy-box-product-price",
       (el) => el.textContent
     );
     expect(typeof priceString).toBe("string");

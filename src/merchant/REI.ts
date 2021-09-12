@@ -15,7 +15,7 @@ export default class REI extends Merchant {
     await page.goto(good.URL).catch((err) => this.requestError(err, good));
 
     const priceString = await page
-      .$eval(".product-current-price > span", (el) => el.textContent)
+      .$eval("#buy-box-product-price", (el) => el.textContent)
       .catch(() => {
         this.handleNotFoundPrice(good);
         return;
