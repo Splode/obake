@@ -11,7 +11,7 @@ Periodically check online stores for goods, and be alerted when inventory is ava
 Install with npm:
 
 ```sh
-npm install -g obake
+npm install -g @splode/obake
 ```
 
 Alternatively, clone this repo and link:
