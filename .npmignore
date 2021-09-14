@@ -1,1 +1,6 @@
 !dist/
+.vscode/
+node_modules/
+
+config.toml
+*.log
