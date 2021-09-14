@@ -1,5 +1,5 @@
 {
-  "name": "obake",
+  "name": "@splode/obake",
   "version": "0.0.1",
   "description": "Check merchants for deals.",
   "main": "src/index.ts",
@@ -29,7 +29,6 @@
     "puppeteer": "^10.2.0",
     "toml": "^3.0.0",
     "ts-node": "^10.2.1",
-    "typescript": "^4.4.2",
     "winston": "^3.3.3",
     "yargs": "^17.1.1"
   },
@@ -46,6 +45,7 @@
     "jest": "^27.1.1",
     "puppeteer-extra": "^3.1.18",
     "puppeteer-extra-plugin-stealth": "^2.7.8",
-    "ts-jest": "^27.0.5"
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.2"
   }
 }
