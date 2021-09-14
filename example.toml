@@ -2,8 +2,6 @@
 # disableLogFile = false     #  Set to true to disable logging to a system log file.
 # interval = 0               #  Set an interval (minutes) to have Obake continuously check for goods.
 # verbose = false            #  Set to true to log verbose output.
-interval = 1
-verbose = true
 
 # Notifications Options ---------------------------------------------------------------------------------------
 # [notifications]
@@ -34,6 +32,7 @@ verbose = true
 # disabled = false           # Set to true to disable checking for this good.
 
 [[goods]]
-URL = "https://apps.apple.com/us/app/things-3-for-ipad/id904244226"
-name = "Things 3 for iPad"
-price = 19.99
+  URL = "https://apps.apple.com/us/app/things-3-for-ipad/id904244226"
+  name = "Things 3 for iPad"
+  price = 19.99
+
