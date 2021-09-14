@@ -13,8 +13,7 @@
     "lint": "tsc --noEmit && eslint \"./**/*.{js,ts}\"",
     "lint:fix": "tsc --noEmit && eslint \"./**/*.{js,ts}\" --fix",
     "test": "jest",
-    "postinstall": "npm run build",
-    "prepare": "npm install && npm run build",
+    "prepare": "npx tsc",
     "preversion": "npm run format && npm run lint"
   },
   "keywords": [],
