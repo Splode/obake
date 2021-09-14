@@ -57,6 +57,8 @@ name = "A Pretty Name for Display"      # string
 price = 199.99                          # number
 ```
 
+Obake will notify you if the item is in stock and _below_ the given price.
+
 ### Supported Merchants
 
 - Amazon
