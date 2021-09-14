@@ -14,7 +14,7 @@
     "lint:fix": "tsc --noEmit && eslint \"./**/*.{js,ts}\" --fix",
     "test": "jest",
     "postinstall": "npm run build",
-    "prepare": "npm run build",
+    "prepare": "npm install && npm run build",
     "preversion": "npm run format && npm run lint"
   },
   "keywords": [],
