@@ -19,7 +19,7 @@ describe("The Amazon merchant checker", () => {
   test("fetches the price for a given good URL", async () => {
     const page = await browser.newPage();
     await page.goto(
-      "https://www.amazon.com/Apple-iPad-12-9-inch-Wi-Fi-256GB/dp/B0862HNWGK",
+      "https://www.amazon.com/Crocs-Classic-Comfortable-Casual-Medium/dp/B07X1QPRYQ/",
       {
         waitUntil: "networkidle2",
       }

@@ -19,7 +19,7 @@ describe("The Costco merchant checker", () => {
   test("fetches the price for a given good URL", async () => {
     const page = await browser.newPage();
     await page.goto(
-      "https://www.costco.com/apple-ipad-pro-12.9%22-a12z-bionic-chip-512gb---space-gray.product.100574567.html",
+      "https://www.costco.com/scotch-c40-tape-dispenser-with-6-rolls-of-magic-tape.product.11516861.html",
       {
         waitUntil: "networkidle2",
       }

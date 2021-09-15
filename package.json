@@ -16,7 +16,7 @@
     "prepublish": "npm run build",
     "preversion": "npm run format && npm run lint"
   },
-  "keywords": [],
+  "keywords": ["automation", "typescript", "deals", "merchants", "headless-chrome", "puppeteer"],
   "author": "Christopher Murphy",
   "license": "ISC",
   "dependencies": {
