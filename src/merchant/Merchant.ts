@@ -99,7 +99,7 @@ export default abstract class Merchant {
   }
 
   protected parsePrice(ps: string): number {
-    return parsePrice(ps);
+    return parsePrice(ps.trim());
   }
 
   protected handleUnavailable(good: Good): void {

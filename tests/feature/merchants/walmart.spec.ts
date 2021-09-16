@@ -30,5 +30,6 @@ describe("The Walmart merchant checker", () => {
     );
     expect(typeof priceString).toBe("string");
     expect(typeof parsePrice(String(priceString))).toBe("number");
+    expect(parsePrice(String(priceString))).not.toBeNaN();
   });
 });
