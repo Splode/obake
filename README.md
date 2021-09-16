@@ -17,7 +17,7 @@ npm install -g @splode/obake
 Alternatively, clone this repo and link:
 
 ```sh
-npm link
+npm install && npm link
 ```
 
 ## Usage
