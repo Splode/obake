@@ -1,6 +1,6 @@
 {
   "name": "@splode/obake",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Check merchants for deals.",
   "main": "src/index.ts",
   "bin": {
@@ -16,7 +16,14 @@
     "prepublish": "npm run build",
     "preversion": "npm run format && npm run lint"
   },
-  "keywords": ["automation", "typescript", "deals", "merchants", "headless-chrome", "puppeteer"],
+  "keywords": [
+    "automation",
+    "typescript",
+    "deals",
+    "merchants",
+    "headless-chrome",
+    "puppeteer"
+  ],
   "author": "Christopher Murphy",
   "license": "ISC",
   "dependencies": {
