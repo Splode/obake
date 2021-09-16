@@ -21,24 +21,24 @@ export default class Walmart extends Merchant {
       .catch((err) => this.requestError(err, good));
 
     const priceString = await page
-      .$eval(".price .visuallyhidden", (el) => el.textContent)
+      .$eval('[itemprop="price"]', (el) => el.textContent)
       .catch(() => {
         this.handleNotFoundPrice(good);
         return;
       });
 
-    const cartText = await page
-      .$eval(".prod-ProductCTA--primary", (el) => el.textContent)
-      .catch(() => {
-        return;
-      });
+    // const cartText = await page
+    //   .$eval(".prod-ProductCTA--primary", (el) => el.textContent)
+    //   .catch(() => {
+    //     return;
+    //   });
 
-    await Promise.all([priceString, cartText]);
+    // await Promise.all([priceString, cartText]);
 
-    if (this.isUnvailable(String(cartText))) {
-      this.handleUnavailable(good);
-      return;
-    }
+    // if (this.isUnvailable(String(cartText))) {
+    //   this.handleUnavailable(good);
+    //   return;
+    // }
 
     if (!priceString) return;
     const price = this.parsePrice(priceString);
@@ -50,7 +50,7 @@ export default class Walmart extends Merchant {
     }
   }
 
-  private isUnvailable(str: string): boolean {
-    return !str.toLowerCase().includes("add");
-  }
+  // private isUnvailable(str: string): boolean {
+  //   return !str.toLowerCase().includes("add");
+  // }
 }

@@ -25,7 +25,7 @@ describe("The Walmart merchant checker", () => {
       }
     );
     const priceString = await page.$eval(
-      ".price .visuallyhidden",
+      '[itemprop="price"]',
       (el) => el.textContent
     );
     expect(typeof priceString).toBe("string");
