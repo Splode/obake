@@ -70,5 +70,6 @@ Obake will notify you if the item is in stock and _below_ the given price.
 - NewEgg
 - REI
 - WalMart
+- Zavvi
 
 * Note: you may encounter aggressive anti-bot detection with these merchants.

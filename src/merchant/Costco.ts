@@ -30,7 +30,7 @@ export default class Costco extends Merchant {
     if (!priceString) return;
     const price = this.parsePrice(priceString);
 
-    this.handFoundPrice(price, good);
+    this.handleFoundPrice(price, good);
 
     if (price < good.price) {
       await this.handleDiscount(price, good);

@@ -11,6 +11,7 @@ import Merchant from "./Merchant";
 import NewEgg from "./NewEgg";
 import REI from "./REI";
 import Walmart from "./Walmart";
+import Zavvi from "./Zavvi";
 
 export default class MerchantFactory {
   public static create(goods: Good[]): Merchant[] {
@@ -89,6 +90,13 @@ export default class MerchantFactory {
           m = MerchantFactory.findByName("walmart", mLs);
           if (!m) {
             m = new Walmart();
+            mLs.push(m);
+          }
+          break;
+        case "us.zavvi.com":
+          m = MerchantFactory.findByName("zavvi", mLs);
+          if (!m) {
+            m = new Zavvi();
             mLs.push(m);
           }
           break;

@@ -116,7 +116,7 @@ export default abstract class Merchant {
     await this.notifier?.send(msg);
   }
 
-  protected handFoundPrice(price: number, good: Good): void {
+  protected handleFoundPrice(price: number, good: Good): void {
     this.log?.info(good.getFoundPriceText(price));
   }
 
