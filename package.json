@@ -1,6 +1,6 @@
 {
   "name": "@splode/obake",
-  "version": "0.0.15",
+  "version": "1.0.0",
   "description": "Check merchants for deals.",
   "main": "src/index.ts",
   "bin": {
