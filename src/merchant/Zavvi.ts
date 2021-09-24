@@ -22,7 +22,7 @@ export default class Zavvi extends Merchant {
       });
 
     const saleString = await page
-      .$eval("#pap-banner-text-value", (el) =>
+      .$eval(".tokyoProductPage_papBanner #pap-banner-text-value", (el) =>
         el.textContent?.replace(/[A-z+:-]/g, "")?.trim()
       )
       .catch(() => {
